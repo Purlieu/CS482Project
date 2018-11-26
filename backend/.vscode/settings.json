@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "C:/Python/python",
+    "editor.formatOnSave": true,
+    "python.linting.pep8Enabled": true,
+    "python.linting.pylintPath": "pylint",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.venvPath": "$(workspaceFolder)/backend/env/Scripts/python",
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "autopep8"
+}
