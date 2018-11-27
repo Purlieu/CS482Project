@@ -29,4 +29,7 @@ node_modules/
 
 .idea/
 
+/backend/.vscode/
 /backend/.vscode
+backend/.vscode
+backend/.vscode/
