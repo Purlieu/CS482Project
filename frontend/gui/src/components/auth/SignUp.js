@@ -16,6 +16,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
+import * as actions from "../../actions/auth";
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -66,7 +68,9 @@ const validate = values => {
 
 class SignUp extends Component {
   onSubmit = formProps => {
-    console.log(formProps);
+    this.props.signUp(formProps, () => {
+      // on success, route to home page
+    });
   };
 
   render() {
@@ -161,6 +165,10 @@ SignUp.propTypes = {
 };
 
 export default compose(
+  connect(
+    null,
+    actions
+  ),
   withStyles(styles),
   reduxForm({ form: "signup", validate })
 )(SignUp);

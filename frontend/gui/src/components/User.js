@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class User extends Component {
   render() {
-    return <div>I am a user</div>;
+    return <div>Start Editing</div>;
   }
 }
 
