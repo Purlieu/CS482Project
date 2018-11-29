@@ -95,6 +95,27 @@ class PersistentDrawerLeft extends React.Component {
     this.setState({ open: false });
   };
 
+  renderDrawerListItems = () => {
+    let items = [
+      { text: "Edit User", icon: "person", path: "/edituser" },
+      { text: "My Games", icon: "videogame_asset", path: "/mygames" },
+      { text: "Sign In", icon: "lock_open", path: "/signin" },
+      { text: "Sign Up", icon: "face", path: "/signup" },
+      { text: "Sign Out", icon: "exit_to_app", path: "/" }
+    ];
+
+    return items.map(item => {
+      return (
+        <ListItem button key={item.text} component={Link} to={item.path}>
+          <ListItemIcon>
+            <Icon>{item.icon}</Icon>
+          </ListItemIcon>
+          <ListItemText primary={item.text} />
+        </ListItem>
+      );
+    });
+  };
+
   render() {
     const { classes, theme } = this.props;
     const { open } = this.state;
@@ -148,22 +169,7 @@ class PersistentDrawerLeft extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>
-            {[
-              { text: "Edit User", icon: "person", path: "/edituser" },
-              { text: "My Games", icon: "videogame_asset", path: "/mygames" },
-              { text: "Sign In", icon: "lock_open", path: "/signin" },
-              { text: "Sign Up", icon: "face", path: "/signup" },
-              { text: "Sign Out", icon: "exit_to_app", path: "/" }
-            ].map(obj => (
-              <ListItem button key={obj.text} component={Link} to={obj.path}>
-                <ListItemIcon>
-                  <Icon>{obj.icon}</Icon>
-                </ListItemIcon>
-                <ListItemText primary={obj.text} />
-              </ListItem>
-            ))}
-          </List>
+          <List>{this.renderDrawerListItems()}</List>
         </Drawer>
         <main
           className={classNames(classes.content, {
