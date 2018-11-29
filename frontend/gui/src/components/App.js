@@ -1,10 +1,10 @@
 import React from "react";
-import NavBar from "./nav/NavBar";
+import NavBar from "./NavBar";
 
-export default () => {
+export default props => {
   return (
     <div>
-      <NavBar />
+      <NavBar>{props.children}</NavBar>
     </div>
   );
 };
