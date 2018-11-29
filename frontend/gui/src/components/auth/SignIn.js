@@ -11,11 +11,11 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import LockIcon from "@material-ui/icons/LockOutlined";
+import Icon from "@material-ui/core/Icon";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const styles = theme => ({
   root: {
@@ -34,6 +34,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.primary.main
   },
+
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing.unit
@@ -77,11 +78,7 @@ class SignIn extends Component {
         alignItems='center'
       >
         <CssBaseline />
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockIcon />
-          </Avatar>
-
+        <Paper className={classes.paper} elevation={1}>
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
@@ -98,6 +95,13 @@ class SignIn extends Component {
                 type='email'
                 component={TextField}
                 autoComplete='none'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon color='primary'>{"account_circle"}</Icon>
+                    </InputAdornment>
+                  )
+                }}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
@@ -108,6 +112,13 @@ class SignIn extends Component {
                 type='password'
                 component={TextField}
                 autoComplete='none'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon color='primary'>{"lock"}</Icon>
+                    </InputAdornment>
+                  )
+                }}
               />
             </FormControl>
             <Button
