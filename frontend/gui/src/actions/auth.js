@@ -1,9 +1,9 @@
 import axios from "axios";
-import { SET_LOADING, AUTH_ERROR, AUTH_USER } from "./types";
+import { AUTH_LOADING, AUTH_ERROR, AUTH_USER } from "./types";
 
-export const setLoading = value => {
+export const authLoading = value => {
   return {
-    type: SET_LOADING,
+    type: AUTH_LOADING,
     payload: value
   };
 };
@@ -31,18 +31,18 @@ export const signout = () => dispatch => {
 };
 
 export const signIn = ({ username, password }, callback) => dispatch => {
-  dispatch({ type: SET_LOADING, payload: true });
+  dispatch({ type: AUTH_LOADING, payload: true });
   console.log({ username, password });
   // make post requst, dispatch if there are errors
-  dispatch({ type: SET_LOADING, payload: false });
+  dispatch({ type: AUTH_LOADING, payload: false });
 };
 
 export const signUp = (
   { username, password, confirmPassword },
   callback
 ) => dispatch => {
-  dispatch({ type: SET_LOADING, payload: true });
+  dispatch({ type: AUTH_LOADING, payload: true });
   console.log({ username, password, confirmPassword });
   // make post requst, dispatch if there are errors, and dispath AUTH_USER as well
-  dispatch({ type: SET_LOADING, payload: false });
+  dispatch({ type: AUTH_LOADING, payload: false });
 };
