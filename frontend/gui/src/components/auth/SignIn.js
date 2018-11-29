@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import TextField from "../shared/TextField";
 
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
@@ -80,7 +79,7 @@ class SignIn extends Component {
         <CssBaseline />
         <Paper className={classes.paper} elevation={1}>
           <Typography component='h1' variant='h5'>
-            Sign in
+            Sign In
           </Typography>
 
           <form
@@ -105,7 +104,6 @@ class SignIn extends Component {
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
-              {/* <InputLabel htmlFor='password'>Password</InputLabel> */}
               <Field
                 label='Password'
                 name='password'
@@ -129,7 +127,7 @@ class SignIn extends Component {
               className={classes.submit}
               disabled={pristine || submitting}
             >
-              Sign in
+              Sign In
             </Button>
           </form>
         </Paper>
@@ -144,5 +142,5 @@ SignIn.propTypes = {
 
 export default compose(
   withStyles(styles),
-  reduxForm({ form: "signup", validate })
+  reduxForm({ form: "signin", validate })
 )(SignIn);
