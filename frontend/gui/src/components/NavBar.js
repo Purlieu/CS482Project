@@ -123,7 +123,7 @@ class PersistentDrawerLeft extends React.Component {
               color='inherit'
               noWrap
               component={Link}
-              to='/'
+              to='/home'
             >
               App_Name
             </Typography>
