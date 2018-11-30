@@ -4,7 +4,6 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../actions/search";
 
-import debounce from "lodash.debounce";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -110,8 +109,7 @@ class PersistentDrawerLeft extends React.Component {
   };
 
   onSearchTerm = event => {
-    event.persist();
-    this.delayedOnSearchTermCallback(event);
+    this.props.updateSearchQuery(event.target.value);
   };
 
   renderDrawerListItems = () => {
@@ -134,19 +132,6 @@ class PersistentDrawerLeft extends React.Component {
       );
     });
   };
-
-  componentWillMount() {
-    this.delayedOnSearchTermCallback = debounce(function(event) {
-      // `event.target` is accessible now
-      if (event.target.value) {
-        this.props.updateSearchQuery(event.target.value);
-      }
-    }, 250);
-  }
-
-  componentWillUnmount() {
-    this.delayedOnSearchTermCallback.cancel();
-  }
 
   render() {
     const { classes, theme } = this.props;
