@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import * as actions from "../actions/search";
+
 import debounce from "lodash.debounce";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -134,12 +138,14 @@ class PersistentDrawerLeft extends React.Component {
   componentWillMount() {
     this.delayedOnSearchTermCallback = debounce(function(event) {
       // `event.target` is accessible now
-      console.log(event.target.value);
+      if (event.target.value) {
+        this.props.updateSearchQuery(event.target.value);
+      }
     }, 250);
   }
 
   componentWillUnmount() {
-    this.debouncedSearchTerm.cancel();
+    this.delayedOnSearchTermCallback.cancel();
   }
 
   render() {
@@ -221,4 +227,10 @@ PersistentDrawerLeft.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default compose(
+  connect(
+    null,
+    actions
+  ),
+  withStyles(styles, { withTheme: true })
+)(PersistentDrawerLeft);
