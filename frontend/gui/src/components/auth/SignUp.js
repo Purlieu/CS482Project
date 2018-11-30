@@ -47,7 +47,7 @@ const styles = theme => ({
 
 const validate = values => {
   const errors = {};
-  const requiredFields = ["email", "password", "confirmPassword"];
+  const requiredFields = ["username", "email", "password1", "password2"];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = "Required";
@@ -60,9 +60,10 @@ const validate = values => {
     errors.email = "Invalid email address";
   }
 
-  if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = "Entered passwords are not the same";
+  if (values.password1 !== values.password2) {
+    errors.password2 = "Entered passwords are not the same";
   }
+
   return errors;
 };
 
@@ -74,7 +75,13 @@ class SignUp extends Component {
   };
 
   render() {
-    const { classes, handleSubmit, pristine, submitting } = this.props;
+    const {
+      classes,
+      handleSubmit,
+      pristine,
+      submitting,
+      errorsFromApi
+    } = this.props;
 
     return (
       <Grid
@@ -97,9 +104,9 @@ class SignUp extends Component {
           >
             <FormControl margin='normal' required fullWidth>
               <Field
-                label='Email Address'
-                name='email'
-                type='email'
+                label='User Name'
+                name='username'
+                type='text'
                 component={TextField}
                 autoComplete='none'
                 InputProps={{
@@ -109,12 +116,30 @@ class SignUp extends Component {
                     </InputAdornment>
                   )
                 }}
+                username={errorsFromApi.username}
+              />
+            </FormControl>
+            <FormControl margin='normal' required fullWidth>
+              <Field
+                label='Email Address'
+                name='email'
+                type='email'
+                component={TextField}
+                autoComplete='none'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon color='primary'>{"email"}</Icon>
+                    </InputAdornment>
+                  )
+                }}
+                email={errorsFromApi.email}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
               <Field
                 label='Password'
-                name='password'
+                name='password1'
                 type='password'
                 component={TextField}
                 autoComplete='none'
@@ -125,12 +150,13 @@ class SignUp extends Component {
                     </InputAdornment>
                   )
                 }}
+                password1={errorsFromApi.password1}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
               <Field
                 label='Confirm Password'
-                name='confirmPassword'
+                name='password2'
                 type='password'
                 component={TextField}
                 autoComplete='none'
@@ -164,9 +190,15 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    errorsFromApi: state.auth.authError
+  };
+}
+
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     actions
   ),
   withStyles(styles),

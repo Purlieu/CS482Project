@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "C:/Python/python",
+  "python.pythonPath": "env/bin/python",
   "editor.formatOnSave": true,
   "python.linting.pep8Enabled": true,
   "python.linting.pylintPath": "pylint",

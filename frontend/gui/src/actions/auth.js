@@ -1,5 +1,5 @@
-import axios from "axios";
-import { LOADING, ERROR, AUTH_USER } from "./types";
+import { LOADING, AUTH_USER, AUTH_ERROR } from "./types";
+import api from "../api";
 
 export const authUser = token => {
   return {
@@ -18,21 +18,44 @@ export const signOut = () => dispatch => {
 
 export const signIn = ({ username, password }, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  console.log({ username, password });
-  // make post requst, dispatch if there are errors
-  dispatch({ type: LOADING, payload: false });
+  api
+    .signIn({ username, password })
+    .then(token => {
+      dispatch({ type: AUTH_USER, payload: token });
+    })
+    .catch(err => {
+      console.log(err.response.data);
+
+      dispatch({
+        type: AUTH_ERROR,
+        payload: "Unable to log in with provided credentials"
+      });
+    })
+    .finally(() => {
+      dispatch({ type: LOADING, payload: false });
+      // callback();
+    });
 
   // callback();
 };
 
 export const signUp = (
-  { username, password, confirmPassword },
+  { username, email, password1, password2 },
   callback
 ) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  console.log({ username, password, confirmPassword });
-  // make post requst, dispatch if there are errors, and dispath AUTH_USER as well
-  dispatch({ type: LOADING, payload: false });
+  api
+    .signUp({ username, email, password1, password2 })
+    .then(token => {
+      dispatch({ type: AUTH_USER, payload: token });
+    })
+    .catch(err => {
+      console.log(err.response.data);
 
-  // callback();
+      dispatch({ type: AUTH_ERROR, payload: err.response.data });
+    })
+    .finally(() => {
+      dispatch({ type: LOADING, payload: false });
+      // callback();
+    });
 };

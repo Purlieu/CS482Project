@@ -24,6 +24,9 @@ const renderTextFeild = ({
       {...custom}
     />
     <FormHelperText error={touched && !!error}>{error}</FormHelperText>
+    <FormHelperText error={!!custom[input.name]}>
+      {custom[input.name]}
+    </FormHelperText>
   </div>
 );
 
