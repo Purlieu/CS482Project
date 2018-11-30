@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
@@ -66,6 +66,12 @@ const SearchBar = ({ classes, onSearchTermChange }) => {
       />
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+  onSearchTermChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(SearchBar);

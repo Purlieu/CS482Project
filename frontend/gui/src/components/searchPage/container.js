@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { func } from "prop-types";
+import PropTypes from "prop-types";
 
 class Container extends Component {
   render() {
@@ -20,6 +20,10 @@ class Container extends Component {
     );
   }
 }
+
+Container.propTypes = {
+  query: PropTypes.string.isRequired
+};
 
 function mapStateToProps(state) {
   return {
