@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import TextField from "../shared/TextField";
@@ -71,6 +72,7 @@ class SignUp extends Component {
   onSubmit = formProps => {
     this.props.signUp(formProps, () => {
       // on success, route to home page
+      this.props.history.push("/home");
     });
   };
 
@@ -197,6 +199,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
+  withRouter,
   connect(
     mapStateToProps,
     actions
