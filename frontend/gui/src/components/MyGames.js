@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import requireAuth from "./requireAuth";
 
 class MyGames extends Component {
   render() {
@@ -6,4 +9,7 @@ class MyGames extends Component {
   }
 }
 
-export default MyGames;
+export default compose(
+  requireAuth,
+  connect(null)
+)(MyGames);
