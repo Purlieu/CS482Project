@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import debounce from "lodash.debounce";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -43,7 +44,7 @@ const styles = theme => ({
     })
   },
   grow: {
-    flexGrow: 0.401
+    flexGrow: 0.38
   },
   menuButton: {
     marginLeft: 12,
@@ -88,11 +89,6 @@ const styles = theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
-  },
-  center: {
-    display: "flex",
-    flexDirection: "column",
-    width: 100 + "px"
   }
 });
 
@@ -107,6 +103,11 @@ class PersistentDrawerLeft extends React.Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false });
+  };
+
+  onSearchTerm = event => {
+    event.persist();
+    this.delayedOnSearchTermCallback(event);
   };
 
   renderDrawerListItems = () => {
@@ -129,6 +130,17 @@ class PersistentDrawerLeft extends React.Component {
       );
     });
   };
+
+  componentWillMount() {
+    this.delayedOnSearchTermCallback = debounce(function(event) {
+      // `event.target` is accessible now
+      console.log(event.target.value);
+    }, 250);
+  }
+
+  componentWillUnmount() {
+    this.debouncedSearchTerm.cancel();
+  }
 
   render() {
     const { classes, theme } = this.props;
@@ -164,8 +176,8 @@ class PersistentDrawerLeft extends React.Component {
               App_Name
             </Typography>
             <div className={classes.grow} />
-            <Grid sm={5}>
-              <SearchBar />
+            <Grid item sm={4}>
+              <SearchBar onSearchTermChange={this.onSearchTerm} />
             </Grid>
           </Toolbar>
         </AppBar>

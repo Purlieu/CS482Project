@@ -50,7 +50,7 @@ const styles = theme => ({
   }
 });
 
-const SearchBar = ({ classes }) => {
+const SearchBar = ({ classes, onSearchTermChange }) => {
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
@@ -62,6 +62,7 @@ const SearchBar = ({ classes }) => {
           root: classes.inputRoot,
           input: classes.inputInput
         }}
+        onChange={onSearchTermChange}
       />
     </div>
   );
