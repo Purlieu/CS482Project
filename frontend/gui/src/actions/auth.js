@@ -16,20 +16,20 @@ export const signOut = () => dispatch => {
   });
 };
 
-export const signIn = ({ email, password }, callback) => dispatch => {
+export const signIn = ({ username, password }, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  api.signIn({ email, password });
+  api.signIn({ username, password });
   dispatch({ type: LOADING, payload: false });
 
   // callback();
 };
 
 export const signUp = (
-  { email, password1, password2 },
+  { username, email, password1, password2 },
   callback
 ) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  api.signUp({ email, password1, password2 });
+  api.signUp({ username, email, password1, password2 });
   // make post requst, dispatch if there are errors, and dispath AUTH_USER as well
   dispatch({ type: LOADING, payload: false });
 

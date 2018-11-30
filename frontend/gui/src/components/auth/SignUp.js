@@ -47,7 +47,7 @@ const styles = theme => ({
 
 const validate = values => {
   const errors = {};
-  const requiredFields = ["email", "password1", "password2"];
+  const requiredFields = ["username", "email", "password1", "password2"];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = "Required";
@@ -61,7 +61,7 @@ const validate = values => {
   }
 
   if (values.password1 !== values.password2) {
-    errors.confirmPassword = "Entered passwords are not the same";
+    errors.password2 = "Entered passwords are not the same";
   }
   return errors;
 };
@@ -97,6 +97,22 @@ class SignUp extends Component {
           >
             <FormControl margin='normal' required fullWidth>
               <Field
+                label='User Name'
+                name='username'
+                type='text'
+                component={TextField}
+                autoComplete='none'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon color='primary'>{"account_circle"}</Icon>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </FormControl>
+            <FormControl margin='normal' required fullWidth>
+              <Field
                 label='Email Address'
                 name='email'
                 type='email'
@@ -105,7 +121,7 @@ class SignUp extends Component {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <Icon color='primary'>{"account_circle"}</Icon>
+                      <Icon color='primary'>{"email"}</Icon>
                     </InputAdornment>
                   )
                 }}
