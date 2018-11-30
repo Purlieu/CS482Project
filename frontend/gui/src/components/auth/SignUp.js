@@ -17,6 +17,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import * as actions from "../../actions/auth";
+import Alert from "../shared/Alert";
 
 const styles = theme => ({
   root: {
@@ -85,6 +86,7 @@ class SignUp extends Component {
         alignItems='center'
       >
         <CssBaseline />
+        <Alert message={"Error"} />
         <Paper className={classes.paper} elevation={1}>
           <Typography component='h1' variant='h5'>
             Sign Up
