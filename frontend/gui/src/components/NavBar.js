@@ -17,8 +17,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
-import InputBase from "@material-ui/core/InputBase";
+import Grid from "@material-ui/core/Grid";
+
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const drawerWidth = 240;
 
@@ -39,6 +41,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  grow: {
+    flexGrow: 0.401
   },
   menuButton: {
     marginLeft: 12,
@@ -78,7 +83,16 @@ const styles = theme => ({
     marginLeft: 0
   },
   typographyLinkTag: {
-    textDecoration: "none"
+    textDecoration: "none",
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
+  },
+  center: {
+    display: "flex",
+    flexDirection: "column",
+    width: 100 + "px"
   }
 });
 
@@ -138,6 +152,7 @@ class PersistentDrawerLeft extends React.Component {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               className={classes.typographyLinkTag}
               variant='h6'
@@ -148,6 +163,10 @@ class PersistentDrawerLeft extends React.Component {
             >
               App_Name
             </Typography>
+            <div className={classes.grow} />
+            <Grid sm={5}>
+              <SearchBar />
+            </Grid>
           </Toolbar>
         </AppBar>
         <Drawer
