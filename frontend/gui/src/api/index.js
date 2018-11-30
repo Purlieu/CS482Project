@@ -9,7 +9,7 @@ export default {
         username,
         password
       })
-      .then(response => console.log(response));
+      .then(response => response.data);
   },
 
   signUp({ username, email, password1, password2 }) {
@@ -20,6 +20,6 @@ export default {
         password1,
         password2
       })
-      .then(response => console.log(response));
+      .then(response => response.data);
   }
 };

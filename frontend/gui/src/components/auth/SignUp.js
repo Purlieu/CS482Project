@@ -17,7 +17,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import * as actions from "../../actions/auth";
-import Alert from "../shared/Alert";
 
 const styles = theme => ({
   root: {
@@ -64,6 +63,7 @@ const validate = values => {
   if (values.password1 !== values.password2) {
     errors.password2 = "Entered passwords are not the same";
   }
+
   return errors;
 };
 
@@ -75,7 +75,13 @@ class SignUp extends Component {
   };
 
   render() {
-    const { classes, handleSubmit, pristine, submitting } = this.props;
+    const {
+      classes,
+      handleSubmit,
+      pristine,
+      submitting,
+      errorsFromApi
+    } = this.props;
 
     return (
       <Grid
@@ -86,7 +92,6 @@ class SignUp extends Component {
         alignItems='center'
       >
         <CssBaseline />
-        <Alert message={"Error"} />
         <Paper className={classes.paper} elevation={1}>
           <Typography component='h1' variant='h5'>
             Sign Up
@@ -111,6 +116,7 @@ class SignUp extends Component {
                     </InputAdornment>
                   )
                 }}
+                username={errorsFromApi.username}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
@@ -127,6 +133,7 @@ class SignUp extends Component {
                     </InputAdornment>
                   )
                 }}
+                email={errorsFromApi.email}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
@@ -143,6 +150,7 @@ class SignUp extends Component {
                     </InputAdornment>
                   )
                 }}
+                password1={errorsFromApi.password1}
               />
             </FormControl>
             <FormControl margin='normal' required fullWidth>
@@ -182,9 +190,15 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    errorsFromApi: state.auth.authError
+  };
+}
+
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     actions
   ),
   withStyles(styles),

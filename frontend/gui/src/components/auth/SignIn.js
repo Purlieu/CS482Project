@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import TextField from "../shared/TextField";
+import Alert from "../shared/Alert";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -65,7 +66,13 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes, handleSubmit, pristine, submitting } = this.props;
+    const {
+      classes,
+      handleSubmit,
+      pristine,
+      submitting,
+      loginErrorMessage
+    } = this.props;
 
     return (
       <Grid
@@ -76,6 +83,7 @@ class SignIn extends Component {
         alignItems='center'
       >
         <CssBaseline />
+        <Alert message={loginErrorMessage} />
         <Paper className={classes.paper} elevation={1}>
           <Typography component='h1' variant='h5'>
             Sign In
@@ -118,6 +126,7 @@ class SignIn extends Component {
                 }}
               />
             </FormControl>
+
             <Button
               type='submit'
               fullWidth
@@ -139,9 +148,15 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    loginErrorMessage: state.auth.authError
+  };
+}
+
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     actions
   ),
   withStyles(styles),

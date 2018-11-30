@@ -24,15 +24,12 @@ const styles = theme => ({
     alignItems: "center"
   },
   margin: {
-    marginRight: theme.spacing.unit * 15,
-    marginLeft: theme.spacing.unit * 15
+    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing.unit
   }
 });
 
 class Alert extends Component {
-  state = {
-    open: true
-  };
   render() {
     let { classes, message } = this.props;
 
@@ -43,9 +40,8 @@ class Alert extends Component {
           vertical: "bottom",
           horizontal: "center"
         }}
-        open={this.state.open}
+        open={!!message}
         autoHideDuration={6000}
-        onClose={this.handleClose}
       >
         <SnackbarContent
           className={classes.error}
@@ -58,17 +54,6 @@ class Alert extends Component {
               {message}
             </span>
           }
-          action={[
-            <IconButton
-              key='close'
-              aria-label='Close'
-              color='inherit'
-              className={classes.close}
-              onClick={this.handleClose}
-            >
-              <CloseIcon className={classes.icon} />
-            </IconButton>
-          ]}
         />
       </Snackbar>
     );
