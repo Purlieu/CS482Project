@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../actions/search";
@@ -213,6 +214,7 @@ PersistentDrawerLeft.propTypes = {
 };
 
 export default compose(
+  withRouter,
   connect(
     null,
     actions
