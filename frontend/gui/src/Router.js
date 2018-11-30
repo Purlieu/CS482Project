@@ -6,6 +6,7 @@ import User from "./components/User";
 import MyGames from "./components/MyGames";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
+import SignOut from "./components/auth/SignOut";
 import Landing from "./components/Landing";
 import SearchPage from "./components/searchPage/container";
 
@@ -18,6 +19,7 @@ export default () => {
       <Route path='/mygames' component={MyGames} />
       <Route path='/signin' component={SignIn} />
       <Route path='/signup' component={SignUp} />
+      <Route path='/signout' component={SignOut} />
       <Route path='/search' component={SearchPage} />
     </div>
   );
