@@ -96,7 +96,7 @@ const styles = theme => ({
   }
 });
 
-class PersistentDrawerLeft extends React.Component {
+class NavBar extends React.Component {
   state = {
     open: false
   };
@@ -208,7 +208,7 @@ class PersistentDrawerLeft extends React.Component {
   }
 }
 
-PersistentDrawerLeft.propTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -220,4 +220,4 @@ export default compose(
     actions
   ),
   withStyles(styles, { withTheme: true })
-)(PersistentDrawerLeft);
+)(NavBar);
