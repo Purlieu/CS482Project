@@ -1,4 +1,4 @@
-import { SEARCH_QUERY_UPDATE } from "./types";
+import { SEARCH_QUERY_UPDATE, LOADING } from "./types";
 
 export function updateSearchQuery(query, callback) {
   const debouncedDispatch = dispatch => {
@@ -19,3 +19,7 @@ export function updateSearchQuery(query, callback) {
 
   return debouncedDispatch;
 }
+
+export const news = () => dispatch => {
+  dispatch({ type: LOADING, payload: true });
+};

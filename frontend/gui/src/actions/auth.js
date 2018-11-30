@@ -1,5 +1,5 @@
-import axios from "axios";
 import { LOADING, ERROR, AUTH_USER } from "./types";
+import api from "../api";
 
 export const authUser = token => {
   return {
@@ -16,21 +16,20 @@ export const signOut = () => dispatch => {
   });
 };
 
-export const signIn = ({ username, password }, callback) => dispatch => {
+export const signIn = ({ email, password }, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  console.log({ username, password });
-  // make post requst, dispatch if there are errors
+  api.signIn({ email, password });
   dispatch({ type: LOADING, payload: false });
 
   // callback();
 };
 
 export const signUp = (
-  { username, password, confirmPassword },
+  { email, password1, password2 },
   callback
 ) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  console.log({ username, password, confirmPassword });
+  api.signUp({ email, password1, password2 });
   // make post requst, dispatch if there are errors, and dispath AUTH_USER as well
   dispatch({ type: LOADING, payload: false });
 

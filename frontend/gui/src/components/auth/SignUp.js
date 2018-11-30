@@ -47,7 +47,7 @@ const styles = theme => ({
 
 const validate = values => {
   const errors = {};
-  const requiredFields = ["email", "password", "confirmPassword"];
+  const requiredFields = ["email", "password1", "password2"];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = "Required";
@@ -60,7 +60,7 @@ const validate = values => {
     errors.email = "Invalid email address";
   }
 
-  if (values.password !== values.confirmPassword) {
+  if (values.password1 !== values.password2) {
     errors.confirmPassword = "Entered passwords are not the same";
   }
   return errors;
@@ -114,7 +114,7 @@ class SignUp extends Component {
             <FormControl margin='normal' required fullWidth>
               <Field
                 label='Password'
-                name='password'
+                name='password1'
                 type='password'
                 component={TextField}
                 autoComplete='none'
@@ -130,7 +130,7 @@ class SignUp extends Component {
             <FormControl margin='normal' required fullWidth>
               <Field
                 label='Confirm Password'
-                name='confirmPassword'
+                name='password2'
                 type='password'
                 component={TextField}
                 autoComplete='none'
