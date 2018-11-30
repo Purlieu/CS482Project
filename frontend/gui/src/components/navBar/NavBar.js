@@ -118,12 +118,17 @@ class NavBar extends React.Component {
 
   renderDrawerListItems = () => {
     let items = [
-      { text: "Edit User", icon: "person", path: "/edituser" },
-      { text: "My Games", icon: "videogame_asset", path: "/mygames" },
       { text: "Sign In", icon: "lock_open", path: "/signin" },
-      { text: "Sign Up", icon: "face", path: "/signup" },
-      { text: "Sign Out", icon: "exit_to_app", path: "/signout" }
+      { text: "Sign Up", icon: "face", path: "/signup" }
     ];
+
+    if (this.props.user) {
+      items = [
+        { text: "Edit User", icon: "person", path: "/edituser" },
+        { text: "My Games", icon: "videogame_asset", path: "/mygames" },
+        { text: "Sign Out", icon: "exit_to_app", path: "/signout" }
+      ];
+    }
 
     return items.map(item => {
       return (
@@ -216,10 +221,16 @@ NavBar.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user
+  };
+}
+
 export default compose(
   withRouter,
   connect(
-    null,
+    mapStateToProps,
     actions
   ),
   withStyles(styles, { withTheme: true })
