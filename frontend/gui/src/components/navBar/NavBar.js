@@ -122,7 +122,7 @@ class NavBar extends React.Component {
       { text: "My Games", icon: "videogame_asset", path: "/mygames" },
       { text: "Sign In", icon: "lock_open", path: "/signin" },
       { text: "Sign Up", icon: "face", path: "/signup" },
-      { text: "Sign Out", icon: "exit_to_app", path: "/" }
+      { text: "Sign Out", icon: "exit_to_app", path: "/signout" }
     ];
 
     return items.map(item => {
