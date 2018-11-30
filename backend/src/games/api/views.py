@@ -1,4 +1,11 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    CreateAPIView,
+    DestroyAPIView,
+    UpdateAPIView,
+)
+from rest_framework import viewsets
 from games.models import Game
 from.serializers import GameSerializer
 
@@ -11,3 +18,23 @@ class GameListView(ListAPIView):
 class GameDetailView(RetrieveAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+
+class GameCreateView(CreateAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+
+
+class GameUpdateView(UpdateAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+
+
+class GameDeleteView(DestroyAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+
+
+class GameViewSet(viewsets.ModelViewSet):
+    serializer_class = GameSerializer
+    queryset = Game.objects.all()
