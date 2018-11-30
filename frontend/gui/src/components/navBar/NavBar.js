@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import * as actions from "../actions/search";
+import * as actions from "../../actions/search";
 
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -110,7 +110,10 @@ class NavBar extends React.Component {
   };
 
   onSearchTerm = event => {
-    this.props.updateSearchQuery(event.target.value);
+    this.props.updateSearchQuery(event.target.value, () => {
+      // callback will be called when this dispatch is complete
+      this.props.history.push("/search");
+    });
   };
 
   renderDrawerListItems = () => {
