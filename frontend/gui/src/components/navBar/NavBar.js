@@ -1,5 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import * as actions from "../../actions/search";
+
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -17,8 +22,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
-import InputBase from "@material-ui/core/InputBase";
+import Grid from "@material-ui/core/Grid";
+
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const drawerWidth = 240;
 
@@ -39,6 +46,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  grow: {
+    flexGrow: 0.38
   },
   menuButton: {
     marginLeft: 12,
@@ -78,11 +88,15 @@ const styles = theme => ({
     marginLeft: 0
   },
   typographyLinkTag: {
-    textDecoration: "none"
+    textDecoration: "none",
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
   }
 });
 
-class PersistentDrawerLeft extends React.Component {
+class NavBar extends React.Component {
   state = {
     open: false
   };
@@ -93,6 +107,13 @@ class PersistentDrawerLeft extends React.Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false });
+  };
+
+  onSearchTerm = event => {
+    this.props.updateSearchQuery(event.target.value, () => {
+      // callback will be called when this dispatch is complete
+      this.props.history.push("/search");
+    });
   };
 
   renderDrawerListItems = () => {
@@ -138,6 +159,7 @@ class PersistentDrawerLeft extends React.Component {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               className={classes.typographyLinkTag}
               variant='h6'
@@ -148,6 +170,10 @@ class PersistentDrawerLeft extends React.Component {
             >
               App_Name
             </Typography>
+            <div className={classes.grow} />
+            <Grid item sm={4}>
+              <SearchBar onSearchTermChange={this.onSearchTerm} />
+            </Grid>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -185,9 +211,16 @@ class PersistentDrawerLeft extends React.Component {
   }
 }
 
-PersistentDrawerLeft.propTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default compose(
+  withRouter,
+  connect(
+    null,
+    actions
+  ),
+  withStyles(styles, { withTheme: true })
+)(NavBar);

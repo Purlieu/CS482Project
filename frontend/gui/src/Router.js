@@ -7,6 +7,7 @@ import MyGames from "./components/MyGames";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import Landing from "./components/Landing";
+import SearchPage from "./components/searchPage/container";
 
 export default () => {
   return (
@@ -17,6 +18,7 @@ export default () => {
       <Route path='/mygames' component={MyGames} />
       <Route path='/signin' component={SignIn} />
       <Route path='/signup' component={SignUp} />
+      <Route path='/search' component={SearchPage} />
     </div>
   );
 };

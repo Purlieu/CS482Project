@@ -1,13 +1,13 @@
-import { AUTH_USER } from "../actions/types";
+import { SEARCH_QUERY_UPDATE } from "../actions/types";
 
 const INITIAL_STATE = {
-  user: ""
+  query: ""
 };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case AUTH_USER:
-      return { ...state, user: action.payload };
+    case SEARCH_QUERY_UPDATE:
+      return { ...state, query: action.payload };
     default:
       return state;
   }

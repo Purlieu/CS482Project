@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
+import createDebounce from "redux-debounced";
 import reducers from "./reducers/index";
 
 // props children - wraps any child components
@@ -14,7 +15,7 @@ export default ({ children, initalState = {} }) => {
   const store = createStore(
     reducers,
     initalState,
-    composeWithDevTools(applyMiddleware(reduxThunk))
+    composeWithDevTools(applyMiddleware(createDebounce(), reduxThunk))
   );
 
   return <Provider store={store}>{children}</Provider>;
