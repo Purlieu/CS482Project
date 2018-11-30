@@ -14,7 +14,7 @@ const styles = theme => ({
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginLeft: 0,
-    width: "60%",
+    width: "90%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing.unit,
       width: "auto"
