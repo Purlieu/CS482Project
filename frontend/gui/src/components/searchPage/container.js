@@ -14,7 +14,7 @@ class Container extends Component {
   }
 
   render() {
-    let { query, news } = this.props;
+    let { query } = this.props;
 
     return (
       <Grid
