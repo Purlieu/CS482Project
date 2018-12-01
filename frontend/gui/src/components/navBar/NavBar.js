@@ -143,7 +143,7 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, user } = this.props;
     const { open } = this.state;
 
     return (
@@ -176,9 +176,13 @@ class NavBar extends React.Component {
               App_Name
             </Typography>
             <div className={classes.grow} />
-            <Grid item sm={4}>
-              <SearchBar onSearchTermChange={this.onSearchTerm} />
-            </Grid>
+            {user ? (
+              <Grid item sm={4}>
+                <SearchBar onSearchTermChange={this.onSearchTerm} />
+              </Grid>
+            ) : (
+              ""
+            )}
           </Toolbar>
         </AppBar>
         <Drawer
