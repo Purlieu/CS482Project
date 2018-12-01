@@ -27,13 +27,13 @@ class Home extends Component {
         alignItems='flex-start'
       >
         <Grid item xs={12}>
-          <Typography component='h2' variant='headline' gutterBottom>
+          <Typography component='h2' variant='h5' gutterBottom>
             Latest News
           </Typography>
           <News latestNews={news} />
         </Grid>
         <Grid item xs={12}>
-          <Typography component='h2' variant='headline' gutterBottom>
+          <Typography component='h2' variant='h5' gutterBottom>
             My Saved Games
           </Typography>
         </Grid>
