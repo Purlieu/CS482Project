@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import * as searchAction from "../../actions/search";
-import News from "./News";
+
 import requireAuth from "../requireAuth";
 
 class Container extends Component {
@@ -30,23 +30,18 @@ class Container extends Component {
         <Grid item xs={6}>
           {query}
         </Grid>
-        <Grid item xs={12}>
-          <News latestNews={news} />
-        </Grid>
       </Grid>
     );
   }
 }
 
 Container.propTypes = {
-  query: PropTypes.string.isRequired,
-  news: PropTypes.array.isRequired
+  query: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    query: state.search.query,
-    news: state.search.news
+    query: state.search.query
   };
 }
 

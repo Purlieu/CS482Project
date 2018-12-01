@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Pagination from "material-ui-flat-pagination";
 
 class News extends Component {
-  state = { offset: 0, limit: 2 };
+  state = { offset: 0, limit: 4 };
 
   handleClick = offset => {
     this.setState({ offset });
