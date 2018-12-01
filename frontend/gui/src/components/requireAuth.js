@@ -12,7 +12,7 @@ export default ChildComponent => {
       this.shouldNavigateAway();
     }
     shouldNavigateAway() {
-      if (!this.props.auth) {
+      if (!this.props.user) {
         this.props.history.push("/");
       }
     }
@@ -21,7 +21,7 @@ export default ChildComponent => {
     }
   }
   function mapStateToProps(state) {
-    return { auth: state.auth.authenticated };
+    return { user: state.auth.user };
   }
   return connect(mapStateToProps)(ComposedComponent);
 };

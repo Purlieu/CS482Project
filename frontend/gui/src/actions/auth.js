@@ -14,7 +14,7 @@ export const signOut = () => dispatch => {
   localStorage.removeItem("expirationDate");
   dispatch({
     type: AUTH_USER,
-    payload: ""
+    payload: null
   });
 };
 
