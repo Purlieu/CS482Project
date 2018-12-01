@@ -28,7 +28,7 @@ class Container extends Component {
         <Grid item xs={6}>
           {query}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <News latestNews={news} />
         </Grid>
       </Grid>

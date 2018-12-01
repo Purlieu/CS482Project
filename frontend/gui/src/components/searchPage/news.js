@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import NewsDetail from "./NewsDetail";
+import List from "@material-ui/core/List";
 
 const News = ({ latestNews }) => {
   return (
-    <div>
+    <List>
       {latestNews.map(news => {
         return (
           <NewsDetail
@@ -13,10 +14,11 @@ const News = ({ latestNews }) => {
             description={news.description}
             url={news.url}
             key={news.title}
+            image={news.urlToImage}
           />
         );
       })}
-    </div>
+    </List>
   );
 };
 
