@@ -32,6 +32,11 @@ class Home extends Component {
           </Typography>
           <News latestNews={news} />
         </Grid>
+        <Grid item xs={12}>
+          <Typography component='h2' variant='headline' gutterBottom>
+            My Saved Games
+          </Typography>
+        </Grid>
       </Grid>
     );
   }
