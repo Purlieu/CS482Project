@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config";
 
-const ROOT_URL_DEV = "http://127.0.0.1:8000";
+const ROOT_URL_DEV = "http://localhost:8000";
 
 // heroku link
 const ROOT_URL_PROD = "";
