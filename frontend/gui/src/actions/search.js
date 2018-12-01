@@ -1,4 +1,5 @@
-import { SEARCH_QUERY_UPDATE, LOADING } from "./types";
+import { SEARCH_QUERY_UPDATE, FETCH_LATEST_NEWS, LOADING } from "./types";
+import api from "../api";
 
 export function updateSearchQuery(query, callback) {
   const debouncedDispatch = dispatch => {
@@ -20,6 +21,9 @@ export function updateSearchQuery(query, callback) {
   return debouncedDispatch;
 }
 
-export const news = () => dispatch => {
+export const fetchTopNews = () => dispatch => {
   dispatch({ type: LOADING, payload: true });
+  api.fetchTopNews().then(articles => {
+    dispatch({ type: FETCH_LATEST_NEWS, payload: articles });
+  });
 };
