@@ -69,6 +69,12 @@ const validate = values => {
 };
 
 class SignUp extends Component {
+  componentDidMount() {
+    if (this.props.user !== null) {
+      this.props.history.push("/home");
+    }
+  }
+
   onSubmit = formProps => {
     this.props.signUp(formProps, () => {
       // on success, route to home page
@@ -194,6 +200,7 @@ SignUp.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    user: state.auth.user,
     errorsFromApi: state.auth.authError
   };
 }
