@@ -1,26 +1,61 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import NewsDetail from "./NewsDetail";
 import List from "@material-ui/core/List";
+import Grid from "@material-ui/core/Grid";
+import Pagination from "material-ui-flat-pagination";
 
-const News = ({ latestNews }) => {
-  return (
-    <List>
-      {latestNews.map(news => {
-        return (
-          <NewsDetail
-            title={news.title}
-            description={news.description}
-            url={news.url}
-            key={news.title}
-            image={news.urlToImage}
+class News extends Component {
+  state = { offset: 0, limit: 2 };
+
+  handleClick = offset => {
+    this.setState({ offset });
+  };
+
+  renderNews = latestNews => {
+    let currentPageNews;
+
+    if (this.state.offset === 0) {
+      currentPageNews = latestNews.slice(0, this.state.limit);
+    } else {
+      currentPageNews = latestNews.slice(
+        this.state.offset,
+        this.state.offset + this.state.limit
+      );
+    }
+
+    return currentPageNews.map(news => {
+      return (
+        <NewsDetail
+          title={news.title}
+          description={news.description}
+          url={news.url}
+          key={news.title}
+          image={news.urlToImage}
+        />
+      );
+    });
+  };
+
+  render() {
+    let { latestNews } = this.props;
+    return (
+      <div>
+        <List>{this.renderNews(latestNews)}</List>
+        <Grid container justify='center'>
+          <Pagination
+            limit={this.state.limit}
+            offset={this.state.offset}
+            total={latestNews.length}
+            onClick={(e, offset) => this.handleClick(offset)}
+            currentPageColor='inherit'
           />
-        );
-      })}
-    </List>
-  );
-};
+        </Grid>
+      </div>
+    );
+  }
+}
 
 News.propTypes = {
   latestNews: PropTypes.array.isRequired

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import * as searchAction from "../../actions/search";
 import News from "./News";
+import requireAuth from "../requireAuth";
 
 class Container extends Component {
   componentDidMount() {
@@ -48,7 +50,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  searchAction
+export default compose(
+  requireAuth,
+  connect(
+    mapStateToProps,
+    searchAction
+  )
 )(Container);
