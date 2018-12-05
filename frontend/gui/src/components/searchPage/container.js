@@ -3,19 +3,21 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
-
 import * as searchAction from "../../actions/search";
-
+import GameDetails from "../gamedetails/GameDetails"
 import requireAuth from "../requireAuth";
 
 class Container extends Component {
   componentDidMount() {
     this.props.fetchTopNews();
   }
+  componentDidUpdate(prevProps) {
+    console.log(prevProps)
+    this.props.fetchGameQuery(prevProps.query);
+  }
 
   render() {
-    let { query } = this.props;
-
+    let { games } = this.props.games
     return (
       <Grid
         container
@@ -27,21 +29,23 @@ class Container extends Component {
         <Grid item xs={6}>
           recent searches..
         </Grid>
-        <Grid item xs={6}>
-          {query}
+        <Grid item xs={6} >
+          <GameDetails listofGames={games}>
+
+          </GameDetails>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }
 
 Container.propTypes = {
-  query: PropTypes.string.isRequired
+  query: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    query: state.search.query
+    games: state.search.games
   };
 }
 
