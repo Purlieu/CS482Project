@@ -31,18 +31,20 @@ export default {
       .then(response => response.data);
   },
 
-  fetchGameQuery(query) {
+  async fetchGameQuery(query) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=*";
-    return fetch(proxyUrl + targetUrl, {
+    const response = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
-        "Content-Type": "text/plain",
+
         method: "get",
-        "user-key": "37ed96dfc4f4f33f0f7bc053d6c46a8a",
+        "user-key": "91107538f140e4e304f883157f558fa4",
         Accept: "application/json"
       })
     })
-      .then(response => response.json())
+    const json = await response.json()
+    await console.log(json)
+    return json;
   },
   fetchTopNews() {
     return axios

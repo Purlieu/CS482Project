@@ -39,6 +39,7 @@ class GameDetails extends Component {
     };
 
     render() {
+        console.log(this.state.games)
         let { listofGames } = this.props;
         return (
             <div>
@@ -61,4 +62,4 @@ GAmeDetails.propTypes = {
     listofGames: PropTypes.array.isRequired
 };
 
-export default GAmeDetails;
+export default GameDetails;

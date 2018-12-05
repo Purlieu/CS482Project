@@ -8,16 +8,35 @@ import GameDetails from "../gamedetails/GameDetails"
 import requireAuth from "../requireAuth";
 
 class Container extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      games: [],
+    };
+  }
   componentDidMount() {
     this.props.fetchTopNews();
+    this.setState({ games: this.props.fetchGameQuery(this.props.query) });;
+
+
   }
-  componentDidUpdate(prevProps) {
-    console.log(prevProps)
-    this.props.fetchGameQuery(prevProps.query);
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.query !== this.props.query) {
+      await this.props.fetchGameQuery(prevProps.query)
+      await this.setStateAsync({ games: this.props.games });
+      console.log(this.state.games)
+    }
   }
 
   render() {
-    let { games } = this.props.games
+
     return (
       <Grid
         container
@@ -30,22 +49,21 @@ class Container extends Component {
           recent searches..
         </Grid>
         <Grid item xs={6} >
-          <GameDetails listofGames={games}>
 
-          </GameDetails>
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }
 
 Container.propTypes = {
   query: PropTypes.string.isRequired,
+
 };
 
 function mapStateToProps(state) {
   return {
-    games: state.search.games
+    query: state.search.query,
   };
 }
 
