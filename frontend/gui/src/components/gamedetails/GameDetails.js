@@ -14,10 +14,7 @@ const Games = ({ name, summary, url, image }) => {
       divider
       button
       onClick={() => {
-        let newWindow = window.open();
-        newWindow.opener = null;
-        newWindow.location = url;
-        newWindow.target = "_blank";
+        // navigate to more detail view
       }}
     >
       <ListItemAvatar>
@@ -31,12 +28,6 @@ const Games = ({ name, summary, url, image }) => {
   );
 };
 
-Games.defaultProps = {
-    name: "",
-    summary: "",
-    url: "",
-    image: "",
-}
 Games.propTypes = {
   name: PropTypes.string,
   summary: PropTypes.string,

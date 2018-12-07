@@ -1,4 +1,9 @@
-import { SEARCH_QUERY_UPDATE, FETCH_LATEST_NEWS, LOADING, GET_GAME_QUERY } from "./types";
+import {
+  SEARCH_QUERY_UPDATE,
+  FETCH_LATEST_NEWS,
+  LOADING,
+  GET_GAME_QUERY
+} from "./types";
 import api from "../api";
 
 export function updateSearchQuery(query, callback) {
@@ -8,8 +13,7 @@ export function updateSearchQuery(query, callback) {
       type: SEARCH_QUERY_UPDATE,
       payload: query
     });
-    callback();
-    dispatch((fetchGameQuery(query)))
+    dispatch(fetchGameQuery(query, callback));
   };
 
   debouncedDispatch.meta = {
@@ -22,17 +26,25 @@ export function updateSearchQuery(query, callback) {
   return debouncedDispatch;
 }
 
-export const fetchGameQuery = (query) => dispatch => {
+export const fetchGameQuery = (query, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  api.fetchGameQuery(query).then(games => {
-    dispatch({ type: GET_GAME_QUERY, payload: games });
-  });
-  dispatch({ type: LOADING, payload: false });
+  api
+    .fetchGameQuery(query)
+    .then(games => {
+      dispatch({ type: GET_GAME_QUERY, payload: games });
+    })
+    .finally(() => {
+      dispatch({ type: LOADING, payload: false });
+      callback();
+    });
 };
 
 export const fetchTopNews = () => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  api.fetchTopNews().then(articles => {
-    dispatch({ type: FETCH_LATEST_NEWS, payload: articles });
-  });
+  api
+    .fetchTopNews()
+    .then(articles => {
+      dispatch({ type: FETCH_LATEST_NEWS, payload: articles });
+    })
+    .finally(() => dispatch({ type: LOADING, payload: false }));
 };

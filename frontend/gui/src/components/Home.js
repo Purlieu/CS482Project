@@ -9,6 +9,7 @@ import requireAuth from "./requireAuth";
 
 import * as searchAction from "../actions/search";
 import { Typography } from "@material-ui/core";
+import Loader from "./shared/Loader";
 
 class Home extends Component {
   componentDidMount() {
@@ -16,27 +17,39 @@ class Home extends Component {
   }
 
   render() {
-    let { news } = this.props;
+    let { news, isLoading } = this.props;
 
     return (
       <Grid
         container
         spacing={8}
         direction='row'
-        justify='flex-start'
-        alignItems='flex-start'
+        justify='center'
+        alignItems='center'
       >
-        <Grid item xs={12}>
-          <Typography component='h2' variant='h5' gutterBottom>
-            Latest News
-          </Typography>
-          <News latestNews={news} />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography component='h2' variant='h5' gutterBottom>
-            My Saved Games
-          </Typography>
-        </Grid>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Grid
+            container
+            spacing={8}
+            direction='row'
+            justify='flex-start'
+            alignItems='flex-start'
+          >
+            <Grid item xs={12}>
+              <Typography component='h2' variant='h5' gutterBottom>
+                Latest News
+              </Typography>
+              <News latestNews={news} />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component='h2' variant='h5' gutterBottom>
+                My Saved Games
+              </Typography>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     );
   }
@@ -48,7 +61,8 @@ Home.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    news: state.search.news
+    news: state.search.news,
+    isLoading: state.shared.loading
   };
 }
 

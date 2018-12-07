@@ -24,7 +24,7 @@ class News extends Component {
         this.state.offset + this.state.limit
       );
     }
-    console.log(currentPageNews)
+
     return currentPageNews.map(news => {
       return (
         <NewsDetail
@@ -42,7 +42,6 @@ class News extends Component {
     let { latestNews } = this.props;
     return (
       <div>
-
         <List>{this.renderNews(latestNews)}</List>
         <Grid container justify='center'>
           <Pagination
