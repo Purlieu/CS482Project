@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import * as searchAction from "../../actions/search";
-import Games from "../gamedetails/GameDetails"
+import Games from "../gamedetails/index.js"
 import requireAuth from "../requireAuth";
 
 class Container extends Component {
@@ -12,15 +12,10 @@ class Container extends Component {
     this.props.fetchTopNews();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.query !== this.props.query) {
-      this.props.fetchGameQuery(this.props.query);
-    }
-  }
 
 
   render() {
-    const { games } = this.props
+    let { games } = this.props
     return (
       <Grid
         container

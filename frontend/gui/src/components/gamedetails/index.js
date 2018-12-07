@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Pagination from "material-ui-flat-pagination";
 
 class Games extends Component {
-    state = { offset: 0, limit: 10 };
+    state = { offset: 0, limit: 5 };
 
     handleClick = offset => {
         this.setState({ offset });
@@ -31,8 +31,8 @@ class Games extends Component {
                     name={games.name}
                     summary={games.summary}
                     url={games.url}
-                    key={games.name}
-                    image={games.cover.url}
+                    key={games.id}
+                    image= {games.cover ? games.cover.url : ""}
                 />
             );
         });

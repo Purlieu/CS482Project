@@ -9,7 +9,9 @@ export function updateSearchQuery(query, callback) {
       payload: query
     });
     callback();
+    dispatch((fetchGameQuery(query)))
   };
+
   debouncedDispatch.meta = {
     debounce: {
       time: 250,
@@ -25,6 +27,7 @@ export const fetchGameQuery = (query) => dispatch => {
   api.fetchGameQuery(query).then(games => {
     dispatch({ type: GET_GAME_QUERY, payload: games });
   });
+  dispatch({ type: LOADING, payload: false });
 };
 
 export const fetchTopNews = () => dispatch => {
