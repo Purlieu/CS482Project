@@ -37,6 +37,7 @@ export const signIn = ({ username, password }, callback) => dispatch => {
       localStorage.setItem("expirationDate", expirationDate);
       dispatch({ type: AUTH_USER, payload: token });
       dispatch(checkAuthTimeout(3600));
+      callback();
     })
     .catch(() => {
       dispatch({
@@ -46,7 +47,6 @@ export const signIn = ({ username, password }, callback) => dispatch => {
     })
     .finally(() => {
       dispatch({ type: LOADING, payload: false });
-      callback();
     });
 };
 
@@ -64,13 +64,13 @@ export const signUp = (
       localStorage.setItem("expirationDate", expirationDate);
       dispatch({ type: AUTH_USER, payload: token });
       dispatch(checkAuthTimeout(3600));
+      callback();
     })
     .catch(err => {
       dispatch({ type: AUTH_ERROR, payload: err.response.data });
     })
     .finally(() => {
       dispatch({ type: LOADING, payload: false });
-      callback();
     });
 };
 
