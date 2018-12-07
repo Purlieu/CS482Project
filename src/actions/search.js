@@ -21,21 +21,13 @@ export function updateSearchQuery(query, callback) {
 }
 
 
-export function updateGameLIst(games, callback) {
-  const debouncedDispatch = dispatch => {
-    // make api call, set loading and errors if applicable
-    dispatch({
-      type: GET_GAME_QUERY,
-      payload: games
-    });
-    callback();
-  };
-  debouncedDispatch.meta = {
-    debounce: {
-      time: 250,
-      key: "GAME_QUERY"
-    }
-  };
+export function updateGameList(games, callback) {
+  // make api call, set loading and errors if applicable
+  dispatch({
+    type: GET_GAME_QUERY,
+    payload: games
+  });
+  callback();
 
   return debouncedDispatch;
 }

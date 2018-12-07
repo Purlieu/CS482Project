@@ -30,22 +30,22 @@ export default {
       })
       .then(response => response.data);
   },
-
   async fetchGameQuery(query) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=*";
-    const response = await fetch(proxyUrl + targetUrl, {
+    const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
-
         method: "get",
         "user-key": "91107538f140e4e304f883157f558fa4",
-        Accept: "application/json"
+        Accept: "application/json",
+        "Content-Type": "text/plain"
       })
     })
-    const json = await response.json()
-    await console.log(json)
+    const json = await getData.json();
+    console.log(json);
     return json;
   },
+
   fetchTopNews() {
     return axios
       .get("https://newsapi.org/v2/top-headlines", {
@@ -54,6 +54,6 @@ export default {
           apiKey: config.apiKey
         }
       })
-      .then(response => response.data.articles);
+      .then(response => response.data.articles)
   }
 };

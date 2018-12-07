@@ -7,7 +7,7 @@ import {
     Avatar
 } from "@material-ui/core";
 
-const GameDetails = ({ title, description, url, image }) => {
+const Games = ({ name, summary, url, image }) => {
     return (
         <ListItem
             alignItems='flex-start'
@@ -24,24 +24,19 @@ const GameDetails = ({ title, description, url, image }) => {
                 <Avatar src={image} />
             </ListItemAvatar>
             <ListItemText
-                primary={title}
-                secondary={<React.Fragment>{description}</React.Fragment>}
+                primary={name}
+                secondary={<React.Fragment>{summary}</React.Fragment>}
             />
         </ListItem>
     );
 };
 
-GameDetails.defaultProps = {
-    title: "",
-    description: "",
-    url: "",
-    image: "",
-}
-GameDetails.propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired
+
+Games.propTypes = {
+    name: PropTypes.string,
+    summary: PropTypes.string,
+    url: PropTypes.string,
+    image: PropTypes.string
 };
 
-export default GameDetails;
+export default Games;

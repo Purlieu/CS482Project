@@ -4,39 +4,23 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import * as searchAction from "../../actions/search";
-import GameDetails from "../gamedetails/GameDetails"
+import Games from "../gamedetails/GameDetails"
 import requireAuth from "../requireAuth";
 
 class Container extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      games: [],
-    };
-  }
   componentDidMount() {
     this.props.fetchTopNews();
-    this.setState({ games: this.props.fetchGameQuery(this.props.query) });;
-
-
-  }
-  setStateAsync(state) {
-    return new Promise((resolve) => {
-      this.setState(state, resolve)
-    });
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.query !== this.props.query) {
-      await this.props.fetchGameQuery(prevProps.query)
-      await this.setStateAsync({ games: this.props.games });
-      console.log(this.state.games)
+      this.props.fetchGameQuery(this.props.query);
     }
   }
 
-  render() {
 
+  render() {
+    const { games } = this.props
     return (
       <Grid
         container
@@ -49,7 +33,7 @@ class Container extends Component {
           recent searches..
         </Grid>
         <Grid item xs={6} >
-
+          <Games listOfGames={games} />
         </Grid>
       </Grid>
     );
@@ -58,12 +42,13 @@ class Container extends Component {
 
 Container.propTypes = {
   query: PropTypes.string.isRequired,
-
+  games: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     query: state.search.query,
+    games: state.search.games
   };
 }
 

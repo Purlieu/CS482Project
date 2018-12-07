@@ -6,60 +6,61 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import Pagination from "material-ui-flat-pagination";
 
-class GameDetails extends Component {
+class Games extends Component {
     state = { offset: 0, limit: 10 };
 
     handleClick = offset => {
         this.setState({ offset });
     };
 
-    renderNews = gameSearch => {
-        let currentGameSearch;
+    renderGames = listOfGames => {
+        let currentGames;
 
         if (this.state.offset === 0) {
-            currentGameSearch = gameSearch.slice(0, this.state.limit);
+            currentGames = listOfGames.slice(0, this.state.limit);
         } else {
-            currentGameSearch = gameSearch.slice(
+            currentGames = listOfGames.slice(
                 this.state.offset,
                 this.state.offset + this.state.limit
             );
         }
 
-        return currentGameSearch.map(games => {
+        return currentGames.map(games => {
             return (
                 <GameDetails
-                    GameDetails={games.title}
-                    description={games.description}
+                    name={games.name}
+                    summary={games.summary}
                     url={games.url}
-                    key={games.title}
-                    image={games.urlToImage}
+                    key={games.name}
+                    image={games.cover.url}
                 />
             );
         });
     };
 
     render() {
-        console.log(this.state.games)
-        let { listofGames } = this.props;
+        let { listOfGames } = this.props;
         return (
             <div>
-                <List>{this.renderNews(listofGames)}</List>
+                <List>{this.renderGames(listOfGames)}</List>
                 <Grid container justify='center'>
                     <Pagination
                         limit={this.state.limit}
                         offset={this.state.offset}
-                        total={currentGameSearch.length}
+                        total={listOfGames.length}
                         onClick={(e, offset) => this.handleClick(offset)}
                         currentPageColor='inherit'
                     />
+
                 </Grid>
+
             </div>
         );
     }
 }
 
-GAmeDetails.propTypes = {
-    listofGames: PropTypes.array.isRequired
+Games.propTypes = {
+    listOfGames: PropTypes.array.isRequired
 };
 
-export default GameDetails;
+export default Games;
