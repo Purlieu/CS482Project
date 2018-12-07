@@ -2,7 +2,9 @@ import {
   SEARCH_QUERY_UPDATE,
   FETCH_LATEST_NEWS,
   LOADING,
-  GET_GAME_QUERY
+  GET_GAME_QUERY,
+  UPDATE_PAST_SEARCHES,
+  CLEAR_PAST_SEARCHES
 } from "./types";
 import api from "../api";
 
@@ -13,12 +15,16 @@ export function updateSearchQuery(query, callback) {
       type: SEARCH_QUERY_UPDATE,
       payload: query
     });
+    dispatch({
+      type: UPDATE_PAST_SEARCHES,
+      payload: query
+    });
     dispatch(fetchGameQuery(query, callback));
   };
 
   debouncedDispatch.meta = {
     debounce: {
-      time: 250,
+      time: 300,
       key: "SEARCH_QUERY"
     }
   };
@@ -47,4 +53,11 @@ export const fetchTopNews = () => dispatch => {
       dispatch({ type: FETCH_LATEST_NEWS, payload: articles });
     })
     .finally(() => dispatch({ type: LOADING, payload: false }));
+};
+
+export const clearRecentSearches = () => {
+  return {
+    type: CLEAR_PAST_SEARCHES,
+    payload: []
+  };
 };

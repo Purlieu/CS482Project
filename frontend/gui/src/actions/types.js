@@ -5,3 +5,5 @@ export const ERROR = "ERROR";
 export const LOADING = "LOADING";
 export const FETCH_LATEST_NEWS = "FETCH_LATEST_NEWS";
 export const GET_GAME_QUERY = "GET_GAME_QUERY";
+export const UPDATE_PAST_SEARCHES = "UPDATE_PAST_SEARCHES";
+export const CLEAR_PAST_SEARCHES = "CLEAR_PAST_SEARCHES";
