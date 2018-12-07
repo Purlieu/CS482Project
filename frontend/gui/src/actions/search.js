@@ -1,4 +1,4 @@
-import { SEARCH_QUERY_UPDATE, FETCH_LATEST_NEWS, LOADING } from "./types";
+import { SEARCH_QUERY_UPDATE, FETCH_LATEST_NEWS, LOADING, GET_GAME_QUERY } from "./types";
 import api from "../api";
 
 export function updateSearchQuery(query, callback) {
@@ -9,6 +9,7 @@ export function updateSearchQuery(query, callback) {
       payload: query
     });
     callback();
+    dispatch((fetchGameQuery(query)))
   };
 
   debouncedDispatch.meta = {
@@ -20,6 +21,14 @@ export function updateSearchQuery(query, callback) {
 
   return debouncedDispatch;
 }
+
+export const fetchGameQuery = (query) => dispatch => {
+  dispatch({ type: LOADING, payload: true });
+  api.fetchGameQuery(query).then(games => {
+    dispatch({ type: GET_GAME_QUERY, payload: games });
+  });
+  dispatch({ type: LOADING, payload: false });
+};
 
 export const fetchTopNews = () => dispatch => {
   dispatch({ type: LOADING, payload: true });
