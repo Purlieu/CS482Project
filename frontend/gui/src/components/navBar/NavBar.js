@@ -110,10 +110,13 @@ class NavBar extends React.Component {
   };
 
   onSearchTerm = event => {
-    this.props.updateSearchQuery(event.target.value, () => {
-      // callback will be called when this dispatch is complete
-      this.props.history.push("/search");
-    });
+    let query = event.target.value.trim();
+    if (query) {
+      this.props.updateSearchQuery(query, () => {
+        // callback will be called when this dispatch is complete
+        this.props.history.push("/search");
+      });
+    }
   };
 
   renderDrawerListItems = () => {

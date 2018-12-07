@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import * as searchAction from "../../actions/search";
 import Games from "../gamedetails/index.js";
+import RecentSearches from "../RecentSearches";
 import requireAuth from "../requireAuth";
 import Loader from "../shared/Loader";
 
@@ -14,7 +15,7 @@ class Container extends Component {
   }
 
   render() {
-    let { games, isLoading } = this.props;
+    let { games, isLoading, pastSearches } = this.props;
     return (
       <Grid
         container
@@ -33,10 +34,10 @@ class Container extends Component {
             justify='flex-start'
             alignItems='flex-start'
           >
-            <Grid item xs={12} sm={6}>
-              recent searches..
+            <Grid item xs={12} sm={4}>
+              <RecentSearches listOfSearches={pastSearches} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={8}>
               <Games listOfGames={games} />
             </Grid>
           </Grid>
@@ -47,14 +48,15 @@ class Container extends Component {
 }
 
 Container.propTypes = {
-  query: PropTypes.string.isRequired,
-  games: PropTypes.array.isRequired
+  games: PropTypes.array.isRequired,
+  pastSearches: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    query: state.search.query,
     games: state.search.games,
+    pastSearches: state.search.pastSearches,
     isLoading: state.shared.loading
   };
 }
