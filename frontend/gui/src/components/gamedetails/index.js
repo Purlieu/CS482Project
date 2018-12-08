@@ -49,7 +49,7 @@ class Games extends Component {
     return (
       <div>
         <List>{this.renderGames(listOfGames)}</List>
-        <Grid container justify='center'>
+        <Grid container justify='center' style={{ width: "75%" }}>
           <Pagination
             limit={this.state.limit}
             offset={this.state.offset}
