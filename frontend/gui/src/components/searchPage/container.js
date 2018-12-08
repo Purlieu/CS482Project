@@ -37,6 +37,7 @@ class Container extends Component {
             <Grid item xs={12} sm={3}>
               <RecentSearches listOfSearches={pastSearches} />
             </Grid>
+            <Grid item xs={12} sm={1} />
             <Grid item xs={12} sm={6}>
               <Games listOfGames={games} />
             </Grid>
