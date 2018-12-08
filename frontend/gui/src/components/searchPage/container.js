@@ -31,10 +31,10 @@ class Container extends Component {
             container
             spacing={8}
             direction='row'
-            justify='flex-start'
+            justify='center'
             alignItems='flex-start'
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={3}>
               <RecentSearches listOfSearches={pastSearches} />
             </Grid>
             <Grid item xs={12} sm={6}>
