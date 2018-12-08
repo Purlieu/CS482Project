@@ -32,7 +32,7 @@ export default {
   },
   async fetchGameQuery(query) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=*";
+      targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
