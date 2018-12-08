@@ -34,10 +34,10 @@ class Container extends Component {
             justify='flex-start'
             alignItems='flex-start'
           >
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
               <RecentSearches listOfSearches={pastSearches} />
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={6}>
               <Games listOfGames={games} />
             </Grid>
           </Grid>
