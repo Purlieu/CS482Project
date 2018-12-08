@@ -128,7 +128,6 @@ class NavBar extends React.Component {
     if (this.props.user) {
       items = [
         { text: "Edit User", icon: "person", path: "/edituser" },
-        { text: "My Games", icon: "videogame_asset", path: "/mygames" },
         { text: "Sign Out", icon: "exit_to_app", path: "/signout" }
       ];
     }

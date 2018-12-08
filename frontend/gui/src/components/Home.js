@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import News from "./news";
+import MyGames from "./MyGames";
 import requireAuth from "./requireAuth";
 
 import * as searchAction from "../actions/search";
@@ -47,6 +48,7 @@ class Home extends Component {
               <Typography component='h2' variant='h5' gutterBottom>
                 My Saved Games
               </Typography>
+              <MyGames />
             </Grid>
           </Grid>
         )}
