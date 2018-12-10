@@ -30,13 +30,13 @@ export default {
       })
       .then(response => response.data);
   },
-  async fetchGameQuery(query) {
+   async fetchGameQuery(query) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "b1b23df351d60c42fdbe7cf2e44362af",
+        "user-key": "7947afaa3ee4546dd2b18e340e32c263",
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
