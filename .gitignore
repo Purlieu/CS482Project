@@ -36,3 +36,5 @@ backend/.vscode/
 
 
 /backend/src/games/__pycache__.py
+/src
+/public
