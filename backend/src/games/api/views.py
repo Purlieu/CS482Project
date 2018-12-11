@@ -38,6 +38,6 @@ class GameDeleteView(DestroyAPIView):
     serializer_class = GameSerializer
 
 
-class GameViewSet(viewsets.ModelViewSet):
-    serializer_class = GameSerializer
-    queryset = Game.objects.all()
+# class GameViewSet(viewsets.ModelViewSet):
+#     serializer_class = GameSerializer
+#     queryset = Game.objects.all()

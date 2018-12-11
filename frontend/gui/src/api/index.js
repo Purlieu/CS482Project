@@ -19,6 +19,20 @@ export default {
       })
       .then(response => response.data);
   },
+  postToAPI(notes, rating, gameid, token) {
+    console.log(token)
+    return axios
+      .post(`${ROOT_URL}/api/create/`, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Token ${token}`
+        },
+        xsrfHeaderName: "X-CSRFTOKEN",
+        xsrfCookieName: "csrftoken",
+        notes, rating, gameid
+      })
+      .then(response => response.data);
+  },
 
   signUp({ username, email, password1, password2 }) {
     return axios
