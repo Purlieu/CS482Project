@@ -20,6 +20,17 @@ export default {
       .then(response => response.data);
   },
 
+  getUser(token) {
+    return axios
+      .get(`${ROOT_URL}/rest-auth/user/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => response.data)
+      .catch(err => console.log(err));
+  },
+
   signUp({ username, email, password1, password2 }) {
     return axios
       .post(`${ROOT_URL}/rest-auth/registration/`, {
@@ -30,9 +41,12 @@ export default {
       })
       .then(response => response.data);
   },
-   async fetchGameQuery(query) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
+  async fetchGameQuery(query) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl =
+        "https://api-endpoint.igdb.com/games/?search=" +
+        query +
+        "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
@@ -40,7 +54,7 @@ export default {
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
-    })
+    });
     const json = await getData.json();
     console.log(json);
     return json;
@@ -54,6 +68,6 @@ export default {
           apiKey: config.apiKey
         }
       })
-      .then(response => response.data.articles)
+      .then(response => response.data.articles);
   }
 };
