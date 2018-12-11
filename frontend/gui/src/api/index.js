@@ -30,7 +30,7 @@ export default {
       })
       .then(response => response.data);
   },
-   async fetchGameQuery(query) {
+  async fetchGameQuery(query) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
     const getData = await fetch(proxyUrl + targetUrl, {
@@ -45,6 +45,7 @@ export default {
     console.log(json);
     return json;
   },
+
 
   fetchTopNews() {
     return axios
