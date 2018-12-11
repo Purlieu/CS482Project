@@ -31,27 +31,27 @@ class Home extends Component {
         {isLoading ? (
           <Loader />
         ) : (
-          <Grid
-            container
-            spacing={8}
-            direction='row'
-            justify='flex-start'
-            alignItems='flex-start'
-          >
-            <Grid item xs={12}>
-              <Typography component='h2' variant='h5' gutterBottom>
-                Latest News
+            <Grid
+              container
+              spacing={8}
+              direction='row'
+              justify='flex-start'
+              alignItems='flex-start'
+            >
+              <Grid item xs={12}>
+                <Typography component='h2' variant='h5' gutterBottom>
+                  Latest News
               </Typography>
-              <News latestNews={news} />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component='h2' variant='h5' gutterBottom>
-                My Saved Games
+                <News latestNews={news} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography component='h2' variant='h5' gutterBottom>
+                  My Saved Games
               </Typography>
-              <MyGames />
+                <MyGames />
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
       </Grid>
     );
   }

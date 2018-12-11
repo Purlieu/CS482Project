@@ -9,7 +9,7 @@ import SignUp from "./components/auth/SignUp";
 import SignOut from "./components/auth/SignOut";
 import Landing from "./components/Landing";
 import SearchPage from "./components/searchPage/container";
-
+import QueryDetails from "./components/QueryDetails/QueryDetails"
 export default () => {
   return (
     <div>
@@ -21,6 +21,7 @@ export default () => {
         <Route path='/signup' component={SignUp} />
         <Route path='/signout' component={SignOut} />
         <Route path='/search' component={SearchPage} />
+        <Route path='/detail' component={QueryDetails} />
         <Redirect from='*' to='/' />
       </Switch>
     </div>

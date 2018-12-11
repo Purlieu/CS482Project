@@ -15,7 +15,7 @@ const styles = {
   }
 };
 
-const Games = ({ platform, name, release_date, url, image, id }) => {
+const Games = ({ platform, name, release_date, image, index, onGameClick }) => {
   return (
     <ListItem
       style={{
@@ -29,7 +29,7 @@ const Games = ({ platform, name, release_date, url, image, id }) => {
       }}
       button
       onClick={() => {
-        console.log("Hi");
+        onGameClick(index);
       }}
     >
       <Paper style={{ padding: 20, width: "100%" }}>

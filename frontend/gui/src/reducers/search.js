@@ -3,17 +3,19 @@ import {
   FETCH_LATEST_NEWS,
   GET_GAME_QUERY,
   UPDATE_PAST_SEARCHES,
-  CLEAR_PAST_SEARCHES
+  CLEAR_PAST_SEARCHES,
+  SET_CURRENT_GAME
 } from "../actions/types";
 
 const INITIAL_STATE = {
   query: "",
   games: [],
   news: [],
-  pastSearches: []
+  pastSearches: [],
+  currentGame: undefined
 };
 
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case SEARCH_QUERY_UPDATE:
       return { ...state, query: action.payload };
@@ -28,6 +30,8 @@ export default function(state = INITIAL_STATE, action) {
       };
     case CLEAR_PAST_SEARCHES:
       return { ...state, pastSearches: action.payload };
+    case SET_CURRENT_GAME:
+      return { ...state, currentGame: action.payload }
     default:
       return state;
   }

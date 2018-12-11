@@ -4,7 +4,8 @@ import {
   LOADING,
   GET_GAME_QUERY,
   UPDATE_PAST_SEARCHES,
-  CLEAR_PAST_SEARCHES
+  CLEAR_PAST_SEARCHES,
+  SET_CURRENT_GAME
 } from "./types";
 import api from "../api";
 
@@ -32,6 +33,15 @@ export function updateSearchQuery(query, callback) {
   return debouncedDispatch;
 }
 
+export const setCurrentGame = (currentGame, callback) => dispatch => {
+  dispatch({ type: LOADING, payload: true });
+  dispatch({
+    type: SET_CURRENT_GAME,
+    payload: currentGame
+  })
+  callback();
+  dispatch({ type: LOADING, payload: false });
+}
 export const fetchGameQuery = (query, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
   api
