@@ -33,3 +33,6 @@ node_modules/
 /backend/.vscode
 backend/.vscode
 backend/.vscode/
+
+
+/backend/src/games/__pycache__.py
