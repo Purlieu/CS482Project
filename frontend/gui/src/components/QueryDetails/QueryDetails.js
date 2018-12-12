@@ -12,8 +12,10 @@ import {
   TextField,
   Card,
   CardHeader,
+  CardMedia,
   CardContent,
   CardActions,
+  Collapse,
   IconButton
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -27,9 +29,8 @@ const styles = theme => ({
   },
   card: {},
   media: {
-    height: 200,
-    paddingTop: "56.25%", // 16:9,
-    width: 200
+    height: 0,
+    paddingTop: "56.25%" // 16:9,
   },
   actions: {
     display: "flex"
@@ -112,11 +113,15 @@ class QueryDetails extends Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
-  renderFirstSetenceOfSummary = summary => {
-    // let positionOfSecondPeriod = summary.indexOf(".", summary.indexOf(".") + 1);
-    let positionOfFirstPeriod = summary.indexOf(".");
-    let result = summary.substring(0, positionOfFirstPeriod);
-    return <Typography paragraph>{"Summary: " + result}</Typography>;
+  renderFirstTwoSetenceOfSummary = summary => {
+    let positionOfSecondPeriod = summary.indexOf(".", summary.indexOf(".") + 1);
+    // let positionOfFirstPeriod = summary.indexOf(".");
+    let result = summary.substring(0, positionOfSecondPeriod);
+    return this.state.expanded ? (
+      ""
+    ) : (
+      <Typography paragraph>{"Summary: " + result}</Typography>
+    );
   };
 
   render() {
@@ -134,8 +139,17 @@ class QueryDetails extends Component {
               }
             />
 
+            <CardMedia
+              className={classes.media}
+              image={
+                currentGame.cover
+                  ? currentGame.artworks.url
+                  : "https://sc.sftcdn.net/images/f1936-d9195.png"
+              }
+            />
+
             <CardContent>
-              {this.renderFirstSetenceOfSummary(currentGame.summary)}
+              {this.renderFirstTwoSetenceOfSummary(currentGame.summary)}
             </CardContent>
 
             <CardActions className={classes.actions} disableActionSpacing>
@@ -150,6 +164,15 @@ class QueryDetails extends Component {
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
+            <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+              <CardContent>
+                <Typography paragraph>
+                  {currentGame.storyline
+                    ? "Storyline: " + currentGame.storyline
+                    : ""}
+                </Typography>
+              </CardContent>
+            </Collapse>
           </Card>
 
           <form onSubmit={this.handleGameSubmit}>

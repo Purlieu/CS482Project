@@ -56,6 +56,18 @@ export const fetchGameQuery = (query, callback) => dispatch => {
     });
 };
 
+export const fetchGameById = (id, callback) => dispatch => {
+  dispatch({ type: LOADING, payload: true });
+  api
+    .fetchMoreDetailsForGameQuery(id)
+    .then(game => {
+      dispatch(setCurrentGame(game, callback));
+    })
+    .finally(() => {
+      dispatch({ type: LOADING, payload: false });
+    });
+};
+
 export const fetchTopNews = () => dispatch => {
   dispatch({ type: LOADING, payload: true });
   api

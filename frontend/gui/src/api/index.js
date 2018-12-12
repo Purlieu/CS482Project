@@ -64,7 +64,8 @@ export default {
       targetUrl =
         "https://api-endpoint.igdb.com/games/?search=" +
         query +
-        "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
+        "&fields=name,url,id,cover,storyline,artworks,summary,release_dates.human,platforms.name&expand=platforms,genres.name&expand=genres,themes.name&expand=themes,game_modes.name&expand=game_modes" +
+        "game_engines.name&expand=game_engines,developers.name&expand=developers,total_rating";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
