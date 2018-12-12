@@ -30,34 +30,34 @@ class Home extends Component {
         {isLoading ? (
           <Loader />
         ) : (
-            <Grid
-              container
-              spacing={8}
-              direction='row'
-              justify='flex-start'
-              alignItems='flex-start'
-            >
-              <Grid item xs={12}>
-                <Typography component='h2' variant='h5' gutterBottom>
-                  Latest News
+          <Grid
+            container
+            spacing={8}
+            direction='row'
+            justify='flex-start'
+            alignItems='flex-start'
+          >
+            <Grid item xs={12}>
+              <Typography component='h2' variant='h5' gutterBottom>
+                Latest News
               </Typography>
-                <News latestNews={news} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography component='h2' variant='h5' gutterBottom>
-                  My Saved Games
-              </Typography>
-                <MyGames listOfGames={saved_games} />
-              </Grid>
+              <News latestNews={news} />
             </Grid>
-          )}
+            <Grid item xs={12}>
+              <Typography component='h2' variant='h5' gutterBottom>
+                My Saved Games
+              </Typography>
+              <MyGames listOfGames={saved_games} />
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     );
   }
 }
 
 Home.propTypes = {
-  news: PropTypes.array.isRequired,
+  news: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
@@ -73,6 +73,6 @@ export default compose(
   requireAuth,
   connect(
     mapStateToProps,
-    searchAction,
+    searchAction
   )
 )(Home);
