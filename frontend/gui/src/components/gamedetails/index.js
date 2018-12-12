@@ -36,13 +36,21 @@ class Games extends Component {
         }
 
         return currentGames.map((games, index) => {
+            let { image } = "";
+            if (games.cover === undefined) {
+                image = "https://sc.sftcdn.net/images/f1936-d9195.png";
+            }
+            else {
+                image = games.cover.url;
+            }
+            console.log(image)
             return (
                 <GameDetails
                     name={games.name}
                     summary={games.summary}
                     url={games.url}
                     key={games.name}
-                    image={games.cover.url}
+                    image={image}
                     index={index}
                     onGameClick={this.onHandleGameClick}
                 />

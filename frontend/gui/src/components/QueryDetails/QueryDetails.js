@@ -33,12 +33,19 @@ class QueryDetails extends Component {
     handleGameSubmit = event => {
         event.preventDefault();
         console.log(this.props.currentGame)
+        let image = "";
+        if (this.props.currentGame.cover === undefined) {
+            image = "https://sc.sftcdn.net/images/f1936-d9195.png";
+        }
+        else {
+            image = this.props.currentGame.cover.url;
+        }
         api.postToAPI(
             this.state.notes,
             this.state.rating,
             this.props.currentGame.id,
             this.props.currentGame.name,
-            this.props.currentGame.cover.url,
+            image,
             this.props.user)
         this.props.history.push('/home')
 

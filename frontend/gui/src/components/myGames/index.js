@@ -21,6 +21,9 @@ class MyGames extends Component {
 
     }
     renderGames = listOfGames => {
+        if (!Array.isArray(listOfGames) || !listOfGames.length) {
+            return;
+        }
         let currentGames;
 
         if (this.state.offset === 0) {
@@ -54,7 +57,7 @@ class MyGames extends Component {
                     <Pagination
                         limit={this.state.limit}
                         offset={this.state.offset}
-                        total={listOfGames.length}
+                        total={listOfGames ? listOfGames.length : 0}
                         currentPageColor='inherit'
                     />
                 </Grid>
