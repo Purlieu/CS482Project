@@ -47,10 +47,10 @@ const Games = ({ platform, name, release_date, image, index, onGameClick }) => {
               {name}
             </Typography>
             <Typography gutterBottom padding={16}>
-              {platform}
+              Console: {platform}
             </Typography>
             <Typography gutterBottom padding={16}>
-              {release_date}
+              Release Date: {release_date}
             </Typography>
           </Grid>
         </Grid>

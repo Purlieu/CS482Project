@@ -36,21 +36,16 @@ class Games extends Component {
         }
 
         return currentGames.map((games, index) => {
-            let { image } = "";
-            if (games.cover === undefined) {
-                image = "https://sc.sftcdn.net/images/f1936-d9195.png";
-            }
-            else {
-                image = games.cover.url;
-            }
-            console.log(image)
+            console.log(games)
             return (
                 <GameDetails
                     name={games.name}
+                    platform={games.platforms ? games.platforms[0].name : "None Listed"}
+                    release_date={games.release_dates ? games.release_dates[0].human : "None Listed"}
                     summary={games.summary}
                     url={games.url}
                     key={games.name}
-                    image={image}
+                    image={games.cover ? games.cover.url : "https://sc.sftcdn.net/images/f1936-d9195.png"}
                     index={index}
                     onGameClick={this.onHandleGameClick}
                 />
