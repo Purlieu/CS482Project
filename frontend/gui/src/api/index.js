@@ -71,7 +71,7 @@ export default {
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "a1e8a72f8bb2ba349847c5fefa319b47",
+        "user-key": "8727d1e1e04a2351fa0a6859f5ea2b9c",
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
