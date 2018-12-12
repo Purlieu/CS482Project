@@ -20,40 +20,34 @@ export default {
       .then(response => response.data);
   },
   postToAPI(notes, rating, gameid, title, image, token) {
-    const sendToken = 'Token ' + token;
-    console.log(notes, rating, gameid, title, image, token)
+    const sendToken = "Token " + token;
+
     return fetch(`${ROOT_URL}/api/create/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: sendToken,
+        Authorization: sendToken
       },
       body: JSON.stringify({
-        "notes": notes,
-        "gameid": gameid,
-        "rating": rating,
-        "title": title,
-        "image": image,
+        notes: notes,
+        gameid: gameid,
+        rating: rating,
+        title: title,
+        image: image
       })
     })
       .then(response => response.data)
       .catch(err => console.log(err));
   },
   getGamesFromAPI(token) {
-    console.log(token)
-    const sendToken = 'Token ' + token;
+    const sendToken = "Token " + token;
     return fetch(`${ROOT_URL}/api/`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
-        Authorization: sendToken,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        return data;
-      })
-      .catch(err => console.log(err));
+        Authorization: sendToken
+      }
+    }).then(response => response.json());
   },
   signUp({ username, email, password1, password2 }) {
     return axios
@@ -66,8 +60,11 @@ export default {
       .then(response => response.data);
   },
   async fetchGameQuery(query) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl =
+        "https://api-endpoint.igdb.com/games/?search=" +
+        query +
+        "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
@@ -75,12 +72,11 @@ export default {
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
-    })
+    });
     const json = await getData.json();
     console.log(json);
     return json;
   },
-
 
   fetchTopNews() {
     return axios
@@ -90,6 +86,6 @@ export default {
           apiKey: config.apiKey
         }
       })
-      .then(response => response.data.articles)
+      .then(response => response.data.articles);
   }
 };

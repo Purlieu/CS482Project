@@ -39,10 +39,10 @@ export const setCurrentGame = (currentGame, callback) => dispatch => {
   dispatch({
     type: SET_CURRENT_GAME,
     payload: currentGame
-  })
+  });
   callback();
   dispatch({ type: LOADING, payload: false });
-}
+};
 export const fetchGameQuery = (query, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
   api
@@ -73,13 +73,17 @@ export const clearRecentSearches = () => {
   };
 };
 
-export const getGamesFromAPI = (token) => dispatch => {
+export const getGamesFromAPI = token => dispatch => {
   dispatch({ type: LOADING, payload: true });
   api
     .getGamesFromAPI(token)
     .then(saved_games => {
+      if (saved_games.detail) {
+        return;
+      }
       dispatch({ type: MY_SAVED_GAMES, payload: saved_games });
     })
+    .catch(err => console.log(err))
     .finally(() => {
       dispatch({ type: LOADING, payload: false });
     });
