@@ -4,7 +4,8 @@ import {
   GET_GAME_QUERY,
   UPDATE_PAST_SEARCHES,
   CLEAR_PAST_SEARCHES,
-  SET_CURRENT_GAME
+  SET_CURRENT_GAME,
+  MY_SAVED_GAMES
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
   games: [],
   news: [],
   pastSearches: [],
-  currentGame: undefined
+  currentGame: undefined,
+  saved_games: []
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -32,6 +34,8 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, pastSearches: action.payload };
     case SET_CURRENT_GAME:
       return { ...state, currentGame: action.payload }
+    case MY_SAVED_GAMES:
+      return { ...state, saved_games: action.payload };
     default:
       return state;
   }

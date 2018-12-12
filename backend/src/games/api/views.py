@@ -1,3 +1,4 @@
+from rest_framework import permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -14,8 +15,12 @@ from.serializers import GameSerializer
 
 
 class GameListView(ListAPIView):
-    queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        gameList = Game.objects.filter(owner=user)
+        return gameList
 
 
 class GameDetailView(RetrieveAPIView):
@@ -26,6 +31,9 @@ class GameDetailView(RetrieveAPIView):
 class GameCreateView(CreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class GameUpdateView(UpdateAPIView):

@@ -5,9 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import News from "./news";
-import MyGames from "./MyGames";
+import MyGames from "./myGames/index";
 import requireAuth from "./requireAuth";
-
 import * as searchAction from "../actions/search";
 import { Typography } from "@material-ui/core";
 import Loader from "./shared/Loader";
@@ -15,10 +14,10 @@ import Loader from "./shared/Loader";
 class Home extends Component {
   componentDidMount() {
     this.props.fetchTopNews();
+    this.props.getGamesFromAPI(this.props.user);
   }
-
   render() {
-    let { news, isLoading } = this.props;
+    let { news, isLoading, saved_games } = this.props;
 
     return (
       <Grid
@@ -44,11 +43,11 @@ class Home extends Component {
               </Typography>
                 <News latestNews={news} />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={4}>
                 <Typography component='h2' variant='h5' gutterBottom>
                   My Saved Games
               </Typography>
-                <MyGames />
+                <MyGames listOfGames={saved_games} />
               </Grid>
             </Grid>
           )}
@@ -58,13 +57,15 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  news: PropTypes.array.isRequired
+  news: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
+    user: state.auth.user,
     news: state.search.news,
-    isLoading: state.shared.loading
+    isLoading: state.shared.loading,
+    saved_games: state.search.saved_games
   };
 }
 
@@ -72,6 +73,6 @@ export default compose(
   requireAuth,
   connect(
     mapStateToProps,
-    searchAction
+    searchAction,
   )
 )(Home);

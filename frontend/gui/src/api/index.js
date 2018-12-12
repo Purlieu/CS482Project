@@ -19,21 +19,42 @@ export default {
       })
       .then(response => response.data);
   },
-  postToAPI(notes, rating, gameid, token) {
-    console.log(token)
-    return axios
-      .post(`${ROOT_URL}/api/create/`, {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Token ${token}`
-        },
-        xsrfHeaderName: "X-CSRFTOKEN",
-        xsrfCookieName: "csrftoken",
-        notes, rating, gameid
+  postToAPI(notes, rating, gameid, title, image, token) {
+    const sendToken = 'Token ' + token;
+    console.log(notes, rating, gameid, title, image, token)
+    return fetch(`${ROOT_URL}/api/create/`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sendToken,
+      },
+      body: JSON.stringify({
+        "notes": notes,
+        "gameid": gameid,
+        "rating": rating,
+        "title": title,
+        "image": image,
       })
-      .then(response => response.data);
+    })
+      .then(response => response.data)
+      .catch(err => console.log(err));
   },
-
+  getGamesFromAPI(token) {
+    console.log(token)
+    const sendToken = 'Token ' + token;
+    return fetch(`${ROOT_URL}/api/`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sendToken,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        return data;
+      })
+      .catch(err => console.log(err));
+  },
   signUp({ username, email, password1, password2 }) {
     return axios
       .post(`${ROOT_URL}/rest-auth/registration/`, {
@@ -50,7 +71,7 @@ export default {
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "7947afaa3ee4546dd2b18e340e32c263",
+        "user-key": "a1e8a72f8bb2ba349847c5fefa319b47",
         Accept: "application/json",
         "Content-Type": "text/plain"
       })

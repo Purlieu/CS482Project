@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -33,7 +32,15 @@ class QueryDetails extends Component {
     }
     handleGameSubmit = event => {
         event.preventDefault();
-        api.postToAPI(this.state.notes, this.state.rating, this.props.currentGame.id, this.props.user)
+        console.log(this.props.currentGame)
+        api.postToAPI(
+            this.state.notes,
+            this.state.rating,
+            this.props.currentGame.id,
+            this.props.currentGame.name,
+            this.props.currentGame.cover.url,
+            this.props.user)
+        this.props.history.push('/home')
 
     };
     handleChange = name => event => {
@@ -53,6 +60,7 @@ class QueryDetails extends Component {
                 direction="column"
             >
                 <Typography variant='h3'>{this.props.currentGame.name}</Typography>
+                <Typography variant='subtitle1'>{this.props.currentGame.summary}</Typography>
                 <form onSubmit={this.handleGameSubmit} >
                     <FormControl
                         margin='normal'
