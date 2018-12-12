@@ -74,7 +74,6 @@ export default {
       })
     });
     const json = await getData.json();
-    console.log(json);
     return json;
   },
 
