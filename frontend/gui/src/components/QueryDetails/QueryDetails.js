@@ -16,7 +16,9 @@ import {
   CardContent,
   CardActions,
   Collapse,
-  IconButton
+  IconButton,
+  List,
+  ListItem
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -27,7 +29,9 @@ const styles = theme => ({
   menu: {
     width: 200
   },
-  card: {},
+  card: {
+    width: "100%"
+  },
   media: {
     height: 0,
     paddingTop: "56.25%" // 16:9,
@@ -113,15 +117,25 @@ class QueryDetails extends Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
-  renderFirstTwoSetenceOfSummary = summary => {
-    let positionOfSecondPeriod = summary.indexOf(".", summary.indexOf(".") + 1);
-    // let positionOfFirstPeriod = summary.indexOf(".");
-    let result = summary.substring(0, positionOfSecondPeriod);
-    return this.state.expanded ? (
-      ""
-    ) : (
-      <Typography paragraph>{"Summary: " + result}</Typography>
-    );
+  renderFirstSetenceOfSummary = summary => {
+    // let positionOfSecondPeriod = summary.indexOf(".", summary.indexOf(".") + 1);
+    let positionOfFirstPeriod = summary.indexOf(".");
+    let result = summary.substring(0, positionOfFirstPeriod);
+    return <Typography paragraph>{"Summary: " + result + "."}</Typography>;
+  };
+
+  renderDeveloperInfo = currentGame => {
+    if (currentGame.developers && currentGame.developers[0]) {
+      return (
+        <ListItem>{"Developer: " + currentGame.developers[0].name}</ListItem>
+      );
+    }
+  };
+
+  renderAhs = currentGame => {
+    if (currentGame.developers && currentGame.developers[0]) {
+      return <ListItem>{currentGame.developers[0].name}</ListItem>;
+    }
   };
 
   render() {
@@ -129,51 +143,49 @@ class QueryDetails extends Component {
       const { classes, currentGame } = this.props;
       return (
         <Grid container alignItems='center' justify='center' direction='column'>
-          <Card className={classes.card}>
-            <CardHeader
-              title={currentGame.name}
-              subheader={
-                currentGame.release_dates
-                  ? "Release Data: " + currentGame.release_dates[0].human
-                  : "Release Data: None Listed"
-              }
-            />
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardHeader
+                title={currentGame.name}
+                subheader={
+                  currentGame.release_dates
+                    ? "Release Data: " + currentGame.release_dates[0].human
+                    : "Release Data: None Listed"
+                }
+              />
 
-            <CardMedia
-              className={classes.media}
-              image={
-                currentGame.cover
-                  ? currentGame.artworks.url
-                  : "https://sc.sftcdn.net/images/f1936-d9195.png"
-              }
-            />
-
-            <CardContent>
-              {this.renderFirstTwoSetenceOfSummary(currentGame.summary)}
-            </CardContent>
-
-            <CardActions className={classes.actions} disableActionSpacing>
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label='Show more'
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
               <CardContent>
-                <Typography paragraph>
-                  {currentGame.storyline
-                    ? "Storyline: " + currentGame.storyline
-                    : ""}
-                </Typography>
+                {this.renderFirstSetenceOfSummary(currentGame.summary)}
+                <List>{this.renderDeveloperInfo(currentGame)}</List>
               </CardContent>
-            </Collapse>
-          </Card>
+
+              <CardActions className={classes.actions} disableActionSpacing>
+                <IconButton
+                  className={classnames(classes.expand, {
+                    [classes.expandOpen]: this.state.expanded
+                  })}
+                  onClick={this.handleExpandClick}
+                  aria-expanded={this.state.expanded}
+                  aria-label='Show more'
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </CardActions>
+              <Collapse
+                in={this.state.expanded && !!currentGame.storyline}
+                timeout='auto'
+                unmountOnExit
+              >
+                <CardContent>
+                  <Typography paragraph>
+                    {currentGame.storyline
+                      ? "Storyline: " + currentGame.storyline
+                      : ""}
+                  </Typography>
+                </CardContent>
+              </Collapse>
+            </Card>
+          </Grid>
 
           <form onSubmit={this.handleGameSubmit}>
             <FormControl margin='normal' fullWidth>

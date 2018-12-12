@@ -65,11 +65,11 @@ export default {
         "https://api-endpoint.igdb.com/games/?search=" +
         query +
         "&fields=name,url,id,cover,storyline,artworks,summary,release_dates.human,platforms.name&expand=platforms,genres.name&expand=genres,themes.name&expand=themes,game_modes.name&expand=game_modes" +
-        "game_engines.name&expand=game_engines,developers.name&expand=developers,total_rating";
+        "game_engines.name&expand=game_engines,developers.name&expand=developers";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "8727d1e1e04a2351fa0a6859f5ea2b9c",
+        "user-key": "66080cfde3a0bdf1072826a6bfe299c5",
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
