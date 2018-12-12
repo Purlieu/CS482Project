@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import GameDetails from "./GameDetails";
+import MyGamesDetails from "./MyGamesDetails";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import Pagination from "material-ui-flat-pagination";
@@ -11,19 +11,19 @@ import { withRouter } from "react-router-dom";
 import requireAuth from "../requireAuth";
 import * as searchAction from "../../actions/search";
 
-class Games extends Component {
+class MyGames extends Component {
     state = { offset: 0, limit: 10 };
 
     handleClick = offset => {
         this.setState({ offset });
     };
     onHandleGameClick = (index) => {
-        this.props.setCurrentGame(this.props.games[index], () => {
-            console.log(this.props.games[index])
-            this.props.history.push('/detail');
-        })
+
     }
     renderGames = listOfGames => {
+        if (!Array.isArray(listOfGames) || !listOfGames.length) {
+            return;
+        }
         let currentGames;
 
         if (this.state.offset === 0) {
@@ -36,23 +36,13 @@ class Games extends Component {
         }
 
         return currentGames.map((games, index) => {
-            let { image } = "";
-            if (games.cover === undefined) {
-                image = "https://sc.sftcdn.net/images/f1936-d9195.png";
-            }
-            else {
-                image = games.cover.url;
-            }
-            console.log(image)
             return (
-                <GameDetails
-                    name={games.name}
-                    summary={games.summary}
-                    url={games.url}
-                    key={games.name}
-                    image={image}
-                    index={index}
-                    onGameClick={this.onHandleGameClick}
+                <MyGamesDetails
+                    gameid={games.gameid}
+                    notes={games.notes}
+                    rating={games.rating}
+                    url={games.image}
+                    title={games.title}
                 />
             );
         });
@@ -67,8 +57,7 @@ class Games extends Component {
                     <Pagination
                         limit={this.state.limit}
                         offset={this.state.offset}
-                        total={listOfGames.length}
-                        onClick={(e, offset) => this.handleClick(offset)}
+                        total={listOfGames ? listOfGames.length : 0}
                         currentPageColor='inherit'
                     />
                 </Grid>
@@ -77,13 +66,13 @@ class Games extends Component {
     }
 }
 
-Games.propTypes = {
+MyGames.propTypes = {
     listOfGames: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        games: state.search.games,
+        saved_games: state.search.saved_games,
     };
 }
 
@@ -94,4 +83,4 @@ export default compose(
         mapStateToProps,
         searchAction,
     )
-)(Games);
+)(MyGames);

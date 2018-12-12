@@ -5,7 +5,8 @@ import {
   GET_GAME_QUERY,
   UPDATE_PAST_SEARCHES,
   CLEAR_PAST_SEARCHES,
-  SET_CURRENT_GAME
+  SET_CURRENT_GAME,
+  MY_SAVED_GAMES
 } from "./types";
 import api from "../api";
 
@@ -70,4 +71,16 @@ export const clearRecentSearches = () => {
     type: CLEAR_PAST_SEARCHES,
     payload: []
   };
+};
+
+export const getGamesFromAPI = (token) => dispatch => {
+  dispatch({ type: LOADING, payload: true });
+  api
+    .getGamesFromAPI(token)
+    .then(saved_games => {
+      dispatch({ type: MY_SAVED_GAMES, payload: saved_games });
+    })
+    .finally(() => {
+      dispatch({ type: LOADING, payload: false });
+    });
 };
