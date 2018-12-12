@@ -22,30 +22,63 @@ const ratings = [
     {
         value: '1',
         label: 'one',
-    }
+    },
+    {
+        value: '2',
+        label: 'two',
+    },
+    {
+        value: '3',
+        label: 'three',
+    },
+    {
+        value: '4',
+        label: 'four',
+    },
+    {
+        value: '5',
+        label: 'five',
+    },
+    {
+        value: '6',
+        label: 'six',
+    },
+    {
+        value: '7',
+        label: 'seven',
+    },
+    {
+        value: '8',
+        label: 'eight',
+    },
+    {
+        value: '9',
+        label: 'nine',
+    },
+    {
+        value: '10',
+        label: 'ten',
+    },
+
+
 ]
 
 class QueryDetails extends Component {
     state = {
         notes: "",
-        rating: 1
+        rating: 1,
+        hasError: false,
     }
+
+
     handleGameSubmit = event => {
         event.preventDefault();
-        console.log(this.props.currentGame)
-        let image = "";
-        if (this.props.currentGame.cover === undefined) {
-            image = "https://sc.sftcdn.net/images/f1936-d9195.png";
-        }
-        else {
-            image = this.props.currentGame.cover.url;
-        }
         api.postToAPI(
             this.state.notes,
             this.state.rating,
             this.props.currentGame.id,
             this.props.currentGame.name,
-            image,
+            this.props.currentGame.cover ? this.props.currentGame.cover.url : "https://sc.sftcdn.net/images/f1936-d9195.png",
             this.props.user)
         this.props.history.push('/home')
 
@@ -56,68 +89,70 @@ class QueryDetails extends Component {
         });
     };
     render() {
-        const {
-            classes
-        } = this.props
-        return (
-            <Grid
-                container
-                alignItems="center"
-                justify="center"
-                direction="column"
-            >
-                <Typography variant='h3'>{this.props.currentGame.name}</Typography>
-                <Typography variant='subtitle1'>{this.props.currentGame.summary}</Typography>
-                <form onSubmit={this.handleGameSubmit} >
-                    <FormControl
-                        margin='normal'
-                        fullWidth
-                    >
-                        <TextField
-                            label="notes"
-                            value={this.state.notes}
-                            onChange={this.handleChange('notes')}
-                            required
-                            margin="normal"
+        try {
+            const {
+                classes
+            } = this.props
+            return (
+                <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                    direction="column"
+                >
+                    <Typography variant='h3'>{this.props.currentGame.name}</Typography>
+                    <Typography variant='subtitle1'>{this.props.currentGame.summary}</Typography>
+                    <form onSubmit={this.handleGameSubmit} >
+                        <FormControl
+                            margin='normal'
+                            fullWidth
                         >
-                        </TextField>
-                    </FormControl>
-                    <FormControl
-                        margin='normal'
-                        fullWidth
-                    >
-                        <TextField
-                            select
-                            label="rating"
-                            value={this.state.rating}
-                            onChange={this.handleChange('rating')}
-                            SelectProps={{
-                                MenuProps: {
-                                    className: classes.menu,
-                                }
-                            }}
-                            helperText="Select Rating"
-                            margin="normal"
+                            <TextField
+                                label="notes"
+                                value={this.state.notes}
+                                onChange={this.handleChange('notes')}
+                                required
+                                margin="normal"
+                            >
+                            </TextField>
+                        </FormControl>
+                        <FormControl
+                            margin='normal'
+                            fullWidth
                         >
-                            {ratings.map(rating => (
-                                <MenuItem key={rating.value} value={rating.value}>
-                                    {rating.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </FormControl>
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        color='primary'
-                        className={classes.submit}
-                    >
-                        Submit
+                            <TextField
+                                select
+                                label="rating"
+                                value={this.state.rating}
+                                onChange={this.handleChange('rating')}
+                                SelectProps={{
+                                    MenuProps: {
+                                        className: classes.menu,
+                                    }
+                                }}
+                                helperText="Select Rating"
+                                margin="normal"
+                            >
+                                {ratings.map(rating => (
+                                    <MenuItem key={rating.value} value={rating.value}>
+                                        {rating.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </FormControl>
+                        <Button
+                            type='submit'
+                            fullWidth
+                            variant='contained'
+                            color='primary'
+                            className={classes.submit}
+                        >
+                            Submit
                 </Button>
-                </form>
-            </Grid>
-        )
+                    </form>
+                </Grid>
+            )
+        } catch (e) { return <h1>Error</h1> }
     }
 }
 
