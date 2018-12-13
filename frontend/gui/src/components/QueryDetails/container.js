@@ -132,129 +132,132 @@ class Container extends Component {
   };
 
   render() {
-    const { classes, currentGame } = this.props;
-    return (
-      <Grid container alignItems='center' justify='center' direction='column'>
-        <Grid item xs={12}>
-          <Card className={classes.card}>
-            <CardHeader
-              title={currentGame.name}
-              subheader={
-                currentGame.release_dates
-                  ? "Release Data: " + currentGame.release_dates[0].human
-                  : "Release Data: None Listed"
-              }
-            />
+    try {
+      const { classes, currentGame } = this.props;
+      return (
+        <Grid container alignItems='center' justify='center' direction='column'>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardHeader
+                title={currentGame.name}
+                subheader={
+                  currentGame.release_dates
+                    ? "Release Data: " + currentGame.release_dates[0].human
+                    : "Release Data: None Listed"
+                }
+              />
 
-            <CardContent>
-              {this.renderFirstSetenceOfSummary(currentGame.summary)}
-              <List className={classes.listRoot}>
-                {currentGame.developers ? (
-                  <ListHelper
-                    items={currentGame.developers}
-                    itemOpen={this.state.developersOpen}
-                    onItemOpen={this.handleDeveloperClick}
-                    title='Developers'
-                  />
-                ) : (
-                    ""
-                  )}
+              <CardContent>
+                {this.renderFirstSetenceOfSummary(currentGame.summary)}
+                <List className={classes.listRoot}>
+                  {currentGame.developers ? (
+                    <ListHelper
+                      items={currentGame.developers}
+                      itemOpen={this.state.developersOpen}
+                      onItemOpen={this.handleDeveloperClick}
+                      title='Developers'
+                    />
+                  ) : (
+                      ""
+                    )}
 
-                {currentGame.platforms ? (
-                  <ListHelper
-                    items={currentGame.platforms}
-                    itemOpen={this.state.platformOpen}
-                    onItemOpen={this.handlePlatformClick}
-                    title='Platforms'
-                  />
-                ) : (
-                    ""
-                  )}
+                  {currentGame.platforms ? (
+                    <ListHelper
+                      items={currentGame.platforms}
+                      itemOpen={this.state.platformOpen}
+                      onItemOpen={this.handlePlatformClick}
+                      title='Platforms'
+                    />
+                  ) : (
+                      ""
+                    )}
 
-                {currentGame.themes ? (
-                  <ListHelper
-                    items={currentGame.themes}
-                    itemOpen={this.state.themeOpen}
-                    onItemOpen={this.handleThemeClick}
-                    title='Themes'
-                  />
-                ) : (
-                    ""
-                  )}
+                  {currentGame.themes ? (
+                    <ListHelper
+                      items={currentGame.themes}
+                      itemOpen={this.state.themeOpen}
+                      onItemOpen={this.handleThemeClick}
+                      title='Themes'
+                    />
+                  ) : (
+                      ""
+                    )}
 
-                {currentGame.game_engines ? (
-                  <ListHelper
-                    items={currentGame.game_engines}
-                    itemOpen={this.state.engineOpen}
-                    onItemOpen={this.handleGameEngineClick}
-                    title='Game Engines'
-                  />
-                ) : (
-                    ""
-                  )}
+                  {currentGame.game_engines ? (
+                    <ListHelper
+                      items={currentGame.game_engines}
+                      itemOpen={this.state.engineOpen}
+                      onItemOpen={this.handleGameEngineClick}
+                      title='Game Engines'
+                    />
+                  ) : (
+                      ""
+                    )}
 
-                {currentGame.time_to_beat ? (
-                  <ListHelper
-                    items={currentGame.time_to_beat}
-                    itemOpen={this.state.timeToBeatOpen}
-                    onItemOpen={this.handleTimeToBeatClick}
-                    title='Time to Beat'
-                  />
-                ) : (
-                    ""
-                  )}
+                  {currentGame.time_to_beat ? (
+                    <ListHelper
+                      items={currentGame.time_to_beat}
+                      itemOpen={this.state.timeToBeatOpen}
+                      onItemOpen={this.handleTimeToBeatClick}
+                      title='Time to Beat'
+                    />
+                  ) : (
+                      ""
+                    )}
 
-                {currentGame.storyline ? (
-                  <ListHelper
-                    items={[{ type: currentGame.storyline }]}
-                    itemOpen={this.state.storylineOpen}
-                    onItemOpen={this.handleStorylineClick}
-                    title='Storyline'
-                  />
-                ) : (
-                    ""
-                  )}
-              </List>
-            </CardContent>
-            <CardActions className={classes.actions}>
-              {currentGame.total_rating ? (
-                <Grid container direction='column'>
-                  <Fab
-                    color='primary'
-                    aria-label='rating'
-                    className={classes.button}
-                  >
-                    {Math.round(Number(currentGame.total_rating))}
-                  </Fab>
-                  Total Rating
+                  {currentGame.storyline ? (
+                    <ListHelper
+                      items={[{ type: currentGame.storyline }]}
+                      itemOpen={this.state.storylineOpen}
+                      onItemOpen={this.handleStorylineClick}
+                      title='Storyline'
+                    />
+                  ) : (
+                      ""
+                    )}
+                </List>
+              </CardContent>
+              <CardActions className={classes.actions}>
+                {currentGame.total_rating ? (
+                  <Grid container direction='column'>
+                    <Fab
+                      color='primary'
+                      aria-label='rating'
+                      className={classes.button}
+                    >
+                      {Math.round(Number(currentGame.total_rating))}
+                    </Fab>
+                    Total Rating
                   </Grid>
-              ) : (
-                  ""
-                )}
+                ) : (
+                    ""
+                  )}
 
-              <Button
-                variant='contained'
-                className={classes.saveModalButton}
-                onClick={this.handleClickModal}
-              >
-                <GamesIcon className={classNames(classes.leftIcon)} />
-                Save
+                <Button
+                  variant='contained'
+                  className={classes.saveModalButton}
+                  onClick={this.handleClickModal}
+                >
+                  <GamesIcon className={classNames(classes.leftIcon)} />
+                  Save
                 </Button>
-            </CardActions>
-          </Card>
+              </CardActions>
+            </Card>
+          </Grid>
+
+          <FormModal
+            onFormInputChange={this.handleChange}
+            notes={this.state.notes}
+            rating={this.state.rating}
+            onGameSubmit={this.handleGameSubmit}
+            onModalClick={this.handleClickModal}
+            modalOpen={this.state.modalOpen}
+          />
         </Grid>
-
-        <FormModal
-          onFormInputChange={this.handleChange}
-          notes={this.state.notes}
-          rating={this.state.rating}
-          onGameSubmit={this.handleGameSubmit}
-          onModalClick={this.handleClickModal}
-          modalOpen={this.state.modalOpen}
-        />
-      </Grid>
-    );
-
+      );
+    } catch (e) {
+      return <h1>Error</h1>;
+    }
   }
 }
 
