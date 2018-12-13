@@ -17,7 +17,22 @@ class MyGames extends Component {
   handleClick = offset => {
     this.setState({ offset });
   };
-  onHandleGameClick = index => {};
+
+  onHandleGameClick = index => {
+    let currentGame = {
+      id: this.props.listOfGames[index].gameid,
+      release_dates: [
+        {
+          human: this.props.listOfGames[index].release_date
+        }
+      ],
+      name: this.props.listOfGames[index].title
+    };
+
+    this.props.setCurrentGame(currentGame, () => {
+      this.props.history.push("/detail");
+    });
+  };
   renderGames = listOfGames => {
     if (!Array.isArray(listOfGames) || !listOfGames.length) {
       return;
@@ -43,6 +58,8 @@ class MyGames extends Component {
             rating={games.rating}
             url={games.image}
             title={games.title}
+            index={index}
+            onGameClick={this.onHandleGameClick}
           />
         </Grid>
       );

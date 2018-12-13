@@ -11,6 +11,7 @@ from rest_framework.generics import (
 )
 from rest_framework import viewsets
 from games.models import Game
+import re
 from.serializers import GameSerializer
 
 
@@ -33,7 +34,18 @@ class GameCreateView(CreateAPIView):
     serializer_class = GameSerializer
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        print(self.request.data)
+        gameid=serializer.validated_data.get('gameid'),
+        print(gameid)
+        queryset = Game.objects.filter(gameid=gameid[0])
+        if queryset.exists():
+            print("Inside query"    )
+            queryset.update(
+                rating=self.request.data.get('rating'),
+                notes=self.request.data.get('notes'),
+            )
+        else:
+            serializer.save(owner=self.request.user)
 
 
 class GameUpdateView(UpdateAPIView):

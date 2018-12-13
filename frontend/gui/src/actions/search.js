@@ -43,6 +43,8 @@ export const setCurrentGame = (currentGame, callback) => dispatch => {
     .then(moreGameInfo => {
       // fetch platforms - array of ids, game_engines, themes, genres
 
+      // release_dates = [{human: undefinded}]
+
       data = {
         ...data,
         total_rating: moreGameInfo[0].total_rating,
