@@ -219,13 +219,16 @@ class Container extends Component {
               </CardContent>
               <CardActions className={classes.actions}>
                 {currentGame.total_rating ? (
-                  <Fab
-                    color='primary'
-                    aria-label='rating'
-                    className={classes.button}
-                  >
-                    {Math.round(Number(currentGame.total_rating))}
-                  </Fab>
+                  <Grid container direction='column'>
+                    <Fab
+                      color='primary'
+                      aria-label='rating'
+                      className={classes.button}
+                    >
+                      {Math.round(Number(currentGame.total_rating))}
+                    </Fab>
+                    Total Rating
+                  </Grid>
                 ) : (
                   ""
                 )}
