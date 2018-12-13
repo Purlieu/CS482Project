@@ -12,81 +12,85 @@ import requireAuth from "../requireAuth";
 import * as searchAction from "../../actions/search";
 
 class Games extends Component {
-    state = { offset: 0, limit: 10 };
+  state = { offset: 0, limit: 10 };
 
-    handleClick = offset => {
-        this.setState({ offset });
-    };
-    onHandleGameClick = (index) => {
-        this.props.setCurrentGame(this.props.games[index], () => {
-            console.log(this.props.games[index])
-            this.props.history.push('/detail');
-        })
+  handleClick = offset => {
+    this.setState({ offset });
+  };
+  onHandleGameClick = index => {
+    this.props.setCurrentGame(this.props.games[index], () => {
+      this.props.history.push("/detail");
+    });
+  };
+  renderGames = listOfGames => {
+    let currentGames;
+
+    if (this.state.offset === 0) {
+      currentGames = listOfGames.slice(0, this.state.limit);
+    } else {
+      currentGames = listOfGames.slice(
+        this.state.offset,
+        this.state.offset + this.state.limit
+      );
     }
-    renderGames = listOfGames => {
-        let currentGames;
 
-        if (this.state.offset === 0) {
-            currentGames = listOfGames.slice(0, this.state.limit);
-        } else {
-            currentGames = listOfGames.slice(
-                this.state.offset,
-                this.state.offset + this.state.limit
-            );
-        }
+    return currentGames.map((games, index) => {
+      return (
+        <GameDetails
+          name={games.name}
+          platform={games.platforms ? games.platforms[0].name : "None Listed"}
+          release_date={
+            games.release_dates ? games.release_dates[0].human : "None Listed"
+          }
+          summary={games.summary}
+          url={games.url}
+          key={games.name}
+          image={
+            games.cover
+              ? games.cover.url
+              : "https://sc.sftcdn.net/images/f1936-d9195.png"
+          }
+          index={index}
+          onGameClick={this.onHandleGameClick}
+        />
+      );
+    });
+  };
 
-        return currentGames.map((games, index) => {
-            console.log(games)
-            return (
-                <GameDetails
-                    name={games.name}
-                    platform={games.platforms ? games.platforms[0].name : "None Listed"}
-                    release_date={games.release_dates ? games.release_dates[0].human : "None Listed"}
-                    summary={games.summary}
-                    url={games.url}
-                    key={games.name}
-                    image={games.cover ? games.cover.url : "https://sc.sftcdn.net/images/f1936-d9195.png"}
-                    index={index}
-                    onGameClick={this.onHandleGameClick}
-                />
-            );
-        });
-    };
-
-    render() {
-        let { listOfGames } = this.props;
-        return (
-            <div>
-                <List>{this.renderGames(listOfGames)}</List>
-                <Grid container justify='center'>
-                    <Pagination
-                        limit={this.state.limit}
-                        offset={this.state.offset}
-                        total={listOfGames.length}
-                        onClick={(e, offset) => this.handleClick(offset)}
-                        currentPageColor='inherit'
-                    />
-                </Grid>
-            </div>
-        );
-    }
+  render() {
+    let { listOfGames } = this.props;
+    return (
+      <div>
+        <List>{this.renderGames(listOfGames)}</List>
+        <Grid container justify='center'>
+          <Pagination
+            limit={this.state.limit}
+            offset={this.state.offset}
+            total={listOfGames.length}
+            onClick={(e, offset) => this.handleClick(offset)}
+            currentPageColor='inherit'
+          />
+        </Grid>
+      </div>
+    );
+  }
 }
 
 Games.propTypes = {
-    listOfGames: PropTypes.array.isRequired
+  listOfGames: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
-    return {
-        games: state.search.games,
-    };
+  return {
+    games: state.search.games
+  };
 }
 
 export default compose(
-    requireAuth,
-    withRouter,
-    connect(
-        mapStateToProps,
-        searchAction,
-    )
+  requireAuth,
+  withRouter,
+  connect(
+    mapStateToProps,
+    searchAction
+  )
 )(Games);

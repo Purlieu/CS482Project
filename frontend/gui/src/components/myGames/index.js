@@ -8,11 +8,11 @@ import Pagination from "material-ui-flat-pagination";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import requireAuth from "../requireAuth";
+
 import * as searchAction from "../../actions/search";
 
 class MyGames extends Component {
-  state = { offset: 0, limit: 10 };
+  state = { offset: 0, limit: 4 };
 
   handleClick = offset => {
     this.setState({ offset });
@@ -22,6 +22,7 @@ class MyGames extends Component {
     if (!Array.isArray(listOfGames) || !listOfGames.length) {
       return;
     }
+
     let currentGames;
 
     if (this.state.offset === 0) {
@@ -35,7 +36,7 @@ class MyGames extends Component {
 
     return currentGames.map((games, index) => {
       return (
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3} key={games.gameid + index + games.rating}>
           <MyGamesDetails
             gameid={games.gameid}
             notes={games.notes}
@@ -61,7 +62,8 @@ class MyGames extends Component {
           <Pagination
             limit={this.state.limit}
             offset={this.state.offset}
-            total={listOfGames ? listOfGames.length : 0}
+            total={listOfGames.length ? listOfGames.length : 0}
+            onClick={(e, offset) => this.handleClick(offset)}
             currentPageColor='inherit'
           />
         </Grid>
@@ -76,7 +78,7 @@ MyGames.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    saved_games: state.search.saved_games
+    listOfGames: state.search.saved_games
   };
 }
 

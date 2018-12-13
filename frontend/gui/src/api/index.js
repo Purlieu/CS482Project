@@ -10,6 +10,8 @@ const ROOT_URL = window.location.href.includes("localhost")
   ? ROOT_URL_DEV
   : ROOT_URL_PROD;
 
+const user_key = "6a96285ce7554f40b5f6c0770e3447a3";
+
 export default {
   signIn({ username, password }) {
     return axios
@@ -19,41 +21,36 @@ export default {
       })
       .then(response => response.data);
   },
-  postToAPI(notes, rating, gameid, title, image, token) {
-    const sendToken = 'Token ' + token;
-    console.log(notes, rating, gameid, title, image, token)
+  postToAPI(notes, rating, gameid, title, release_date, image, token) {
+    const sendToken = "Token " + token;
+
     return fetch(`${ROOT_URL}/api/create/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: sendToken,
+        Authorization: sendToken
       },
       body: JSON.stringify({
-        "notes": notes,
-        "gameid": gameid,
-        "rating": rating,
-        "title": title,
-        "image": image,
+        notes: notes,
+        gameid: gameid,
+        rating: rating,
+        title: title,
+        release_date: release_date,
+        image: image
       })
     })
       .then(response => response.data)
       .catch(err => console.log(err));
   },
   getGamesFromAPI(token) {
-    console.log(token)
-    const sendToken = 'Token ' + token;
+    const sendToken = "Token " + token;
     return fetch(`${ROOT_URL}/api/`, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
-        Authorization: sendToken,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        return data;
-      })
-      .catch(err => console.log(err));
+        Authorization: sendToken
+      }
+    }).then(response => response.json());
   },
   signUp({ username, email, password1, password2 }) {
     return axios
@@ -66,21 +63,98 @@ export default {
       .then(response => response.data);
   },
   async fetchGameQuery(query) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = "https://api-endpoint.igdb.com/games/?search=" + query + "&fields=name,url,id,cover,summary,release_dates.human,platforms.name&expand=platforms";
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl =
+        "https://api-endpoint.igdb.com/games/?search=" +
+        query +
+        "&fields=name,url,id,cover,release_dates.human,platforms.name&expand=platforms," +
+        "developers.name&expand=developers";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "8727d1e1e04a2351fa0a6859f5ea2b9c",
+        "user-key": user_key,
         Accept: "application/json",
         "Content-Type": "text/plain"
       })
-    })
+    });
     const json = await getData.json();
-    console.log(json);
     return json;
   },
 
+  async fetchMoreGameInfo(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/games/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchPlatformsForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/platforms/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchGameEnginesForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/game_engines/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchThemeForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/themes/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchReleaseDayForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/release_dates/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
 
   fetchTopNews() {
     return axios
@@ -90,6 +164,6 @@ export default {
           apiKey: config.apiKey
         }
       })
-      .then(response => response.data.articles)
+      .then(response => response.data.articles);
   }
 };
