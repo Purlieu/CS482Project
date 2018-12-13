@@ -35,11 +35,11 @@ class GameCreateView(CreateAPIView):
 
     def perform_create(self, serializer):
         print(self.request.data)
-        gameid=serializer.validated_data.get('gameid'),
+        gameid = serializer.validated_data.get('gameid'),
         print(gameid)
         queryset = Game.objects.filter(gameid=gameid[0])
         if queryset.exists():
-            print("Inside query"    )
+            print("Inside query")
             queryset.update(
                 rating=self.request.data.get('rating'),
                 notes=self.request.data.get('notes'),
