@@ -3,7 +3,8 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import requireAuth from "../requireAuth";
-import classnames from "classnames";
+import classNames from "classnames";
+
 import {
   Grid,
   Typography,
@@ -13,9 +14,13 @@ import {
   Card,
   CardHeader,
   CardContent,
+  CardActions,
   IconButton,
-  List
+  List,
+  Fab
 } from "@material-ui/core";
+
+import GamesIcon from "@material-ui/icons/Games";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
@@ -39,6 +44,18 @@ const styles = theme => ({
   },
   actions: {
     display: "flex"
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  saveModalButton: {
+    marginLeft: "auto",
+    [theme.breakpoints.up("sm")]: {
+      marginRight: 8
+    }
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
   }
 });
 
@@ -85,7 +102,7 @@ const ratings = [
   }
 ];
 
-class QueryDetails extends Component {
+class Container extends Component {
   state = {
     notes: "",
     rating: 1,
@@ -237,6 +254,24 @@ class QueryDetails extends Component {
                   )}
                 </List>
               </CardContent>
+              <CardActions className={classes.actions}>
+                {currentGame.total_rating ? (
+                  <Fab
+                    color='primary'
+                    aria-label='rating'
+                    className={classes.button}
+                  >
+                    {Math.round(Number(currentGame.total_rating))}
+                  </Fab>
+                ) : (
+                  ""
+                )}
+
+                <Button variant='contained' className={classes.saveModalButton}>
+                  <GamesIcon className={classNames(classes.leftIcon)} />
+                  Save
+                </Button>
+              </CardActions>
             </Card>
           </Grid>
 
@@ -304,4 +339,4 @@ export default compose(
     mapStateToProps,
     null
   )
-)(QueryDetails);
+)(Container);

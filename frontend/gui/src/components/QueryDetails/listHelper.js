@@ -9,13 +9,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing.unit * 10
   }
 });
 
 const renderListItem = ({ items, classes, itemOpen, onItemOpen, title }) => (
   <List component='div' disablePadding>
-    <ListItem button onClick={onItemOpen}>
+    <ListItem button onClick={onItemOpen} disableGutters divider>
       <ListItemText inset primary={title} />
       {itemOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
     </ListItem>
