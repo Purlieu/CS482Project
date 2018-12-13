@@ -160,8 +160,8 @@ class Container extends Component {
                       title='Developers'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   {currentGame.platforms ? (
                     <ListHelper
@@ -171,8 +171,8 @@ class Container extends Component {
                       title='Platforms'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   {currentGame.themes ? (
                     <ListHelper
@@ -182,8 +182,8 @@ class Container extends Component {
                       title='Themes'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   {currentGame.game_engines ? (
                     <ListHelper
@@ -193,8 +193,8 @@ class Container extends Component {
                       title='Game Engines'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   {currentGame.time_to_beat ? (
                     <ListHelper
@@ -204,8 +204,8 @@ class Container extends Component {
                       title='Time to Beat'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
 
                   {currentGame.storyline ? (
                     <ListHelper
@@ -215,8 +215,8 @@ class Container extends Component {
                       title='Storyline'
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </List>
               </CardContent>
               <CardActions className={classes.actions}>
@@ -232,8 +232,8 @@ class Container extends Component {
                     Total Rating
                   </Grid>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Button
                   variant='contained'
