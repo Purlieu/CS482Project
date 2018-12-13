@@ -12,13 +12,16 @@ import {
   TextField,
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
   CardActions,
   Collapse,
   IconButton,
   List,
-  ListItem
+  ListItem,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  ListItemText
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -132,10 +135,80 @@ class QueryDetails extends Component {
     }
   };
 
-  renderAhs = currentGame => {
-    if (currentGame.developers && currentGame.developers[0]) {
-      return <ListItem>{currentGame.developers[0].name}</ListItem>;
-    }
+  renderPlatforms = currentGame => {
+    return (
+      <ListItem>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Platforms</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <List>
+              {currentGame.platforms.map(platform => {
+                return <ListItem key={platform.type}>{platform.type}</ListItem>;
+              })}
+            </List>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </ListItem>
+    );
+  };
+
+  renderThemes = currentGame => {
+    return (
+      <ListItem>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Themes</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <List>
+              {currentGame.themes.map(theme => {
+                return <ListItem key={theme.type}>{theme.type}</ListItem>;
+              })}
+            </List>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </ListItem>
+    );
+  };
+
+  renderGameEngines = currentGame => {
+    return (
+      <ListItem>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Game Engines</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <List>
+              {currentGame.game_engines.map(engine => {
+                return <ListItem key={engine.type}>{engine.type}</ListItem>;
+              })}
+            </List>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </ListItem>
+    );
+  };
+
+  renderTimeToBeat = currentGame => {
+    return (
+      <ListItem>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Time to Beat</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <List>
+              {currentGame.time_to_beat.map(tb => {
+                return <ListItem key={tb.type}>{tb.type}</ListItem>;
+              })}
+            </List>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </ListItem>
+    );
   };
 
   render() {
@@ -156,7 +229,13 @@ class QueryDetails extends Component {
 
               <CardContent>
                 {this.renderFirstSetenceOfSummary(currentGame.summary)}
-                <List>{this.renderDeveloperInfo(currentGame)}</List>
+                <List>
+                  {this.renderDeveloperInfo(currentGame)}
+                  {this.renderPlatforms(currentGame)}
+                  {this.renderThemes(currentGame)}
+                  {this.renderGameEngines(currentGame)}
+                  {this.renderTimeToBeat(currentGame)}
+                </List>
               </CardContent>
 
               <CardActions className={classes.actions} disableActionSpacing>

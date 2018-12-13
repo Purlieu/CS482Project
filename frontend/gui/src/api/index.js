@@ -10,6 +10,8 @@ const ROOT_URL = window.location.href.includes("localhost")
   ? ROOT_URL_DEV
   : ROOT_URL_PROD;
 
+const user_key = "e2a64d950a7f76fd8b9013b36e890dd2";
+
 export default {
   signIn({ username, password }) {
     return axios
@@ -64,12 +66,87 @@ export default {
       targetUrl =
         "https://api-endpoint.igdb.com/games/?search=" +
         query +
-        "&fields=name,url,id,cover,storyline,artworks,summary,release_dates.human,platforms.name&expand=platforms,genres.name&expand=genres,themes.name&expand=themes,game_modes.name&expand=game_modes" +
-        "game_engines.name&expand=game_engines,developers.name&expand=developers";
+        "&fields=name,url,id,cover,release_dates.human,platforms.name&expand=platforms," +
+        "developers.name&expand=developers";
     const getData = await fetch(proxyUrl + targetUrl, {
       headers: new Headers({
         method: "get",
-        "user-key": "66080cfde3a0bdf1072826a6bfe299c5",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchMoreGameInfo(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/games/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchPlatformsForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/platforms/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchGameEnginesForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/game_engines/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchThemeForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/themes/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
+        Accept: "application/json",
+        "Content-Type": "text/plain"
+      })
+    });
+    const json = await getData.json();
+    return json;
+  },
+
+  async fetchReleaseDayForGame(id) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/",
+      targetUrl = `https://api-endpoint.igdb.com/release_dates/${id}?fields=*`;
+    const getData = await fetch(proxyUrl + targetUrl, {
+      headers: new Headers({
+        method: "get",
+        "user-key": user_key,
         Accept: "application/json",
         "Content-Type": "text/plain"
       })

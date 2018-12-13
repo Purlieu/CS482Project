@@ -36,12 +36,109 @@ export function updateSearchQuery(query, callback) {
 
 export const setCurrentGame = (currentGame, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
-  dispatch({
-    type: SET_CURRENT_GAME,
-    payload: currentGame
-  });
-  callback();
-  dispatch({ type: LOADING, payload: false });
+
+  let data = {};
+  api
+    .fetchMoreGameInfo(currentGame.id)
+    .then(moreGameInfo => {
+      // fetch platforms - array of ids, game_engines, themes, genres
+
+      data = {
+        ...data,
+        total_rating: moreGameInfo[0].total_rating,
+        time_to_beat: moreGameInfo[0].time_to_beat,
+        platforms: moreGameInfo[0].platforms,
+        game_engines: moreGameInfo[0].game_engines,
+        themes: moreGameInfo[0].themes,
+        storyline: moreGameInfo[0].storyline,
+        summary: moreGameInfo[0].summary
+      };
+
+      let promises;
+
+      promises = data.platforms.map(platformId =>
+        api.fetchPlatformsForGame(platformId)
+      );
+
+      return Promise.all(promises);
+    })
+    .then(responses => {
+      let platforms = [];
+      responses.map(response => platforms.push({ type: response[0].name }));
+      data = {
+        ...data,
+        platforms
+      };
+
+      let promises;
+
+      promises = data.game_engines.map(gameEngineId =>
+        api.fetchGameEnginesForGame(gameEngineId)
+      );
+
+      return Promise.all(promises);
+    })
+    .then(responses => {
+      let game_engines = [];
+
+      responses.map(response => game_engines.push({ type: response[0].name }));
+      data = {
+        ...data,
+        game_engines
+      };
+
+      let promises;
+
+      promises = data.themes.map(themeId => api.fetchThemeForGame(themeId));
+
+      return Promise.all(promises);
+    })
+    .then(responses => {
+      let themes = [];
+
+      responses.map(response => themes.push({ type: response[0].name }));
+      data = {
+        ...data,
+        themes
+      };
+
+      return api.fetchReleaseDayForGame(currentGame.id);
+    })
+    .then(relaseDate => {
+      if (relaseDate && relaseDate.length > 0) {
+        data = { ...data, release_dates: relaseDate };
+      }
+
+      // change time_to_beat from seconds to hours
+      let time_to_beat = [];
+
+      for (const key of Object.keys(data.time_to_beat)) {
+        let newObj = {};
+        newObj.type = `${key} : ${Math.round(
+          Number(data.time_to_beat[key]) / 3600
+        )} hours`;
+        time_to_beat.push(newObj);
+      }
+
+      data = { ...data, time_to_beat };
+
+      // attach this data object to the current game object
+      for (const key of Object.keys(data)) {
+        currentGame[key] = data[key];
+      }
+
+      console.log(currentGame);
+
+      dispatch({
+        type: SET_CURRENT_GAME,
+        payload: currentGame
+      });
+      callback();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .finally(() => dispatch({ type: LOADING, payload: false }));
 };
 export const fetchGameQuery = (query, callback) => dispatch => {
   dispatch({ type: LOADING, payload: true });
@@ -53,18 +150,6 @@ export const fetchGameQuery = (query, callback) => dispatch => {
     .finally(() => {
       dispatch({ type: LOADING, payload: false });
       callback();
-    });
-};
-
-export const fetchGameById = (id, callback) => dispatch => {
-  dispatch({ type: LOADING, payload: true });
-  api
-    .fetchMoreDetailsForGameQuery(id)
-    .then(game => {
-      dispatch(setCurrentGame(game, callback));
-    })
-    .finally(() => {
-      dispatch({ type: LOADING, payload: false });
     });
 };
 

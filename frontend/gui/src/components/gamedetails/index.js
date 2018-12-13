@@ -19,7 +19,6 @@ class Games extends Component {
   };
   onHandleGameClick = index => {
     this.props.setCurrentGame(this.props.games[index], () => {
-      console.log(this.props.games[index]);
       this.props.history.push("/detail");
     });
   };
