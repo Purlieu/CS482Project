@@ -27,22 +27,22 @@ class Container extends Component {
         {isLoading ? (
           <Loader />
         ) : (
-          <Grid
-            container
-            spacing={8}
-            direction='row'
-            justify='center'
-            alignItems='flex-start'
-          >
-            <Grid item xs={12} sm={3}>
-              <RecentSearches listOfSearches={pastSearches} />
+            <Grid
+              container
+              spacing={8}
+              direction='row'
+              justify='center'
+              alignItems='flex-start'
+            >
+              <Grid item xs={12} sm={3}>
+                <RecentSearches listOfSearches={pastSearches} />
+              </Grid>
+              <Grid item xs={12} sm={1} />
+              <Grid item xs={12} sm={6}>
+                <Games listOfGames={games} />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={1} />
-            <Grid item xs={12} sm={6}>
-              <Games listOfGames={games} />
-            </Grid>
-          </Grid>
-        )}
+          )}
       </Grid>
     );
   }

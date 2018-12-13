@@ -21,6 +21,19 @@ export default {
       })
       .then(response => response.data);
   },
+
+  getUser(token) {
+    const sendToken = "Token " + token;
+    return axios
+      .get(`${ROOT_URL}/rest-auth/user/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: sendToken
+        }
+      })
+      .then(response => response.data);
+  },
+
   postToAPI(notes, rating, gameid, title, release_date, image, token) {
     const sendToken = "Token " + token;
 
