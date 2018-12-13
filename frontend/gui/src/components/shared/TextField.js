@@ -4,8 +4,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
-  divStyle: {
-    display: "contents"
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
   }
 });
 

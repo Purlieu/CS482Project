@@ -13,24 +13,22 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardActions,
-  Collapse,
   IconButton,
-  List,
-  ListItem,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  ListItemText
+  List
 } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import api from "../../api";
+import ListHelper from "./listHelper";
 
 const styles = theme => ({
   menu: {
     width: 200
+  },
+  listRoot: {
+    width: "100%",
+    backgroundColor: theme.palette.background.paper
   },
   card: {
     width: "100%"
@@ -92,7 +90,13 @@ class QueryDetails extends Component {
     notes: "",
     rating: 1,
     hasError: false,
-    expanded: false
+    expanded: false,
+    developersOpen: false,
+    platformOpen: false,
+    themeOpen: false,
+    engineOpen: false,
+    timeToBeatOpen: false,
+    storylineOpen: false
   };
 
   handleGameSubmit = event => {
@@ -116,8 +120,28 @@ class QueryDetails extends Component {
     });
   };
 
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
+  handlePlatformClick = () => {
+    this.setState(state => ({ platformOpen: !state.platformOpen }));
+  };
+
+  handleThemeClick = () => {
+    this.setState(state => ({ themeOpen: !state.themeOpen }));
+  };
+
+  handleGameEngineClick = () => {
+    this.setState(state => ({ engineOpen: !state.engineOpen }));
+  };
+
+  handleTimeToBeatClick = () => {
+    this.setState(state => ({ timeToBeatOpen: !state.timeToBeatOpen }));
+  };
+
+  handleDeveloperClick = () => {
+    this.setState(state => ({ developersOpen: !state.developersOpen }));
+  };
+
+  handleStorylineClick = () => {
+    this.setState(state => ({ storylineOpen: !state.storylineOpen }));
   };
 
   renderFirstSetenceOfSummary = summary => {
@@ -125,90 +149,6 @@ class QueryDetails extends Component {
     let positionOfFirstPeriod = summary.indexOf(".");
     let result = summary.substring(0, positionOfFirstPeriod);
     return <Typography paragraph>{"Summary: " + result + "."}</Typography>;
-  };
-
-  renderDeveloperInfo = currentGame => {
-    if (currentGame.developers && currentGame.developers[0]) {
-      return (
-        <ListItem>{"Developer: " + currentGame.developers[0].name}</ListItem>
-      );
-    }
-  };
-
-  renderPlatforms = currentGame => {
-    return (
-      <ListItem>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Platforms</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <List>
-              {currentGame.platforms.map(platform => {
-                return <ListItem key={platform.type}>{platform.type}</ListItem>;
-              })}
-            </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </ListItem>
-    );
-  };
-
-  renderThemes = currentGame => {
-    return (
-      <ListItem>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Themes</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <List>
-              {currentGame.themes.map(theme => {
-                return <ListItem key={theme.type}>{theme.type}</ListItem>;
-              })}
-            </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </ListItem>
-    );
-  };
-
-  renderGameEngines = currentGame => {
-    return (
-      <ListItem>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Game Engines</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <List>
-              {currentGame.game_engines.map(engine => {
-                return <ListItem key={engine.type}>{engine.type}</ListItem>;
-              })}
-            </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </ListItem>
-    );
-  };
-
-  renderTimeToBeat = currentGame => {
-    return (
-      <ListItem>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Time to Beat</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <List>
-              {currentGame.time_to_beat.map(tb => {
-                return <ListItem key={tb.type}>{tb.type}</ListItem>;
-              })}
-            </List>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </ListItem>
-    );
   };
 
   render() {
@@ -229,40 +169,47 @@ class QueryDetails extends Component {
 
               <CardContent>
                 {this.renderFirstSetenceOfSummary(currentGame.summary)}
-                <List>
-                  {this.renderDeveloperInfo(currentGame)}
-                  {this.renderPlatforms(currentGame)}
-                  {this.renderThemes(currentGame)}
-                  {this.renderGameEngines(currentGame)}
-                  {this.renderTimeToBeat(currentGame)}
+                <List className={classes.listRoot}>
+                  <ListHelper
+                    items={currentGame.developers}
+                    itemOpen={this.state.developersOpen}
+                    onItemOpen={this.handleDeveloperClick}
+                    title='Developers'
+                  />
+
+                  <ListHelper
+                    items={currentGame.platforms}
+                    itemOpen={this.state.platformOpen}
+                    onItemOpen={this.handlePlatformClick}
+                    title='Platforms'
+                  />
+                  <ListHelper
+                    items={currentGame.themes}
+                    itemOpen={this.state.themeOpen}
+                    onItemOpen={this.handleThemeClick}
+                    title='Themes'
+                  />
+                  <ListHelper
+                    items={currentGame.game_engines}
+                    itemOpen={this.state.engineOpen}
+                    onItemOpen={this.handleGameEngineClick}
+                    title='Game Engines'
+                  />
+                  <ListHelper
+                    items={currentGame.time_to_beat}
+                    itemOpen={this.state.timeToBeatOpen}
+                    onItemOpen={this.handleTimeToBeatClick}
+                    title='Time to Beat'
+                  />
+
+                  <ListHelper
+                    items={[{ type: currentGame.storyline }]}
+                    itemOpen={this.state.storylineOpen}
+                    onItemOpen={this.handleStorylineClick}
+                    title='Storyline'
+                  />
                 </List>
               </CardContent>
-
-              <CardActions className={classes.actions} disableActionSpacing>
-                <IconButton
-                  className={classnames(classes.expand, {
-                    [classes.expandOpen]: this.state.expanded
-                  })}
-                  onClick={this.handleExpandClick}
-                  aria-expanded={this.state.expanded}
-                  aria-label='Show more'
-                >
-                  <ExpandMoreIcon />
-                </IconButton>
-              </CardActions>
-              <Collapse
-                in={this.state.expanded && !!currentGame.storyline}
-                timeout='auto'
-                unmountOnExit
-              >
-                <CardContent>
-                  <Typography paragraph>
-                    {currentGame.storyline
-                      ? "Storyline: " + currentGame.storyline
-                      : ""}
-                  </Typography>
-                </CardContent>
-              </Collapse>
             </Card>
           </Grid>
 
