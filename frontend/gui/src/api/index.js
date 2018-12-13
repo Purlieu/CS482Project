@@ -21,7 +21,7 @@ export default {
       })
       .then(response => response.data);
   },
-  postToAPI(notes, rating, gameid, title, image, token) {
+  postToAPI(notes, rating, gameid, title, release_date, image, token) {
     const sendToken = "Token " + token;
 
     return fetch(`${ROOT_URL}/api/create/`, {
@@ -35,6 +35,7 @@ export default {
         gameid: gameid,
         rating: rating,
         title: title,
+        release_date: release_date,
         image: image
       })
     })

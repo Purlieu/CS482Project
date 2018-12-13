@@ -8,14 +8,10 @@ import classNames from "classnames";
 import {
   Grid,
   Typography,
-  FormControl,
-  MenuItem,
-  TextField,
   Card,
   CardHeader,
   CardContent,
   CardActions,
-  IconButton,
   List,
   Fab
 } from "@material-ui/core";
@@ -83,6 +79,9 @@ class Container extends Component {
         this.state.rating,
         this.props.currentGame.id,
         this.props.currentGame.name,
+        this.props.release_dates
+          ? this.props.currentGame.release_dates[0].human
+          : "None Listed",
         this.props.currentGame.cover
           ? this.props.currentGame.cover.url
           : "https://sc.sftcdn.net/images/f1936-d9195.png",
