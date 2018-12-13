@@ -79,7 +79,7 @@ class Container extends Component {
         this.state.rating,
         this.props.currentGame.id,
         this.props.currentGame.name,
-        this.props.release_dates
+        this.props.currentGame.release_dates
           ? this.props.currentGame.release_dates[0].human
           : "None Listed",
         this.props.currentGame.cover
