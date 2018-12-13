@@ -54,80 +54,95 @@ export const setCurrentGame = (currentGame, callback) => dispatch => {
         summary: moreGameInfo[0].summary
       };
 
-      let promises;
-
-      promises = data.platforms.map(platformId =>
-        api.fetchPlatformsForGame(platformId)
-      );
-
-      return Promise.all(promises);
+      if (data.platforms) {
+        let promises = data.platforms.map(platformId =>
+          api.fetchPlatformsForGame(platformId)
+        );
+        return Promise.all(promises);
+      } else {
+        return Promise.resolve(false);
+      }
     })
     .then(responses => {
-      let platforms = [];
-      responses.map(response => platforms.push({ type: response[0].name }));
-      data = {
-        ...data,
-        platforms
-      };
+      if (responses) {
+        let platforms = [];
+        responses.map(response => platforms.push({ type: response[0].name }));
+        data = {
+          ...data,
+          platforms
+        };
+      }
 
-      let promises;
+      if (data.game_engines) {
+        let promises = data.game_engines.map(gameEngineId =>
+          api.fetchGameEnginesForGame(gameEngineId)
+        );
 
-      promises = data.game_engines.map(gameEngineId =>
-        api.fetchGameEnginesForGame(gameEngineId)
-      );
-
-      return Promise.all(promises);
+        return Promise.all(promises);
+      } else {
+        return Promise.resolve(false);
+      }
     })
     .then(responses => {
-      let game_engines = [];
+      if (responses) {
+        let game_engines = [];
 
-      responses.map(response => game_engines.push({ type: response[0].name }));
-      data = {
-        ...data,
-        game_engines
-      };
+        responses.map(response =>
+          game_engines.push({ type: response[0].name })
+        );
+        data = {
+          ...data,
+          game_engines
+        };
+      }
 
-      let promises;
+      if (data.themes) {
+        let promises = data.themes.map(themeId =>
+          api.fetchThemeForGame(themeId)
+        );
 
-      promises = data.themes.map(themeId => api.fetchThemeForGame(themeId));
-
-      return Promise.all(promises);
+        return Promise.all(promises);
+      } else {
+        return Promise.resolve(false);
+      }
     })
     .then(responses => {
-      let themes = [];
+      if (responses) {
+        let themes = [];
 
-      responses.map(response => themes.push({ type: response[0].name }));
-      data = {
-        ...data,
-        themes
-      };
+        responses.map(response => themes.push({ type: response[0].name }));
+        data = {
+          ...data,
+          themes
+        };
+      }
 
       return api.fetchReleaseDayForGame(currentGame.id);
     })
     .then(relaseDate => {
-      if (relaseDate && relaseDate.length > 0) {
-        data = { ...data, release_dates: relaseDate };
+      // if (relaseDate && relaseDate.length > 0) {
+      //   data = { ...data, release_dates: relaseDate };
+      // }
+
+      if (data.time_to_beat) {
+        // change time_to_beat from seconds to hours
+        let time_to_beat = [];
+
+        for (const key of Object.keys(data.time_to_beat)) {
+          let newObj = {};
+          newObj.type = `${key} : ${Math.round(
+            Number(data.time_to_beat[key]) / 3600
+          )} hours`;
+          time_to_beat.push(newObj);
+        }
+
+        data = { ...data, time_to_beat };
       }
-
-      // change time_to_beat from seconds to hours
-      let time_to_beat = [];
-
-      for (const key of Object.keys(data.time_to_beat)) {
-        let newObj = {};
-        newObj.type = `${key} : ${Math.round(
-          Number(data.time_to_beat[key]) / 3600
-        )} hours`;
-        time_to_beat.push(newObj);
-      }
-
-      data = { ...data, time_to_beat };
 
       // attach this data object to the current game object
       for (const key of Object.keys(data)) {
         currentGame[key] = data[key];
       }
-
-      console.log(currentGame);
 
       dispatch({
         type: SET_CURRENT_GAME,

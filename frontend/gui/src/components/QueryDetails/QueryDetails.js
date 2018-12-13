@@ -170,44 +170,71 @@ class QueryDetails extends Component {
               <CardContent>
                 {this.renderFirstSetenceOfSummary(currentGame.summary)}
                 <List className={classes.listRoot}>
-                  <ListHelper
-                    items={currentGame.developers}
-                    itemOpen={this.state.developersOpen}
-                    onItemOpen={this.handleDeveloperClick}
-                    title='Developers'
-                  />
+                  {currentGame.developers ? (
+                    <ListHelper
+                      items={currentGame.developers}
+                      itemOpen={this.state.developersOpen}
+                      onItemOpen={this.handleDeveloperClick}
+                      title='Developers'
+                    />
+                  ) : (
+                    ""
+                  )}
 
-                  <ListHelper
-                    items={currentGame.platforms}
-                    itemOpen={this.state.platformOpen}
-                    onItemOpen={this.handlePlatformClick}
-                    title='Platforms'
-                  />
-                  <ListHelper
-                    items={currentGame.themes}
-                    itemOpen={this.state.themeOpen}
-                    onItemOpen={this.handleThemeClick}
-                    title='Themes'
-                  />
-                  <ListHelper
-                    items={currentGame.game_engines}
-                    itemOpen={this.state.engineOpen}
-                    onItemOpen={this.handleGameEngineClick}
-                    title='Game Engines'
-                  />
-                  <ListHelper
-                    items={currentGame.time_to_beat}
-                    itemOpen={this.state.timeToBeatOpen}
-                    onItemOpen={this.handleTimeToBeatClick}
-                    title='Time to Beat'
-                  />
+                  {currentGame.platforms ? (
+                    <ListHelper
+                      items={currentGame.platforms}
+                      itemOpen={this.state.platformOpen}
+                      onItemOpen={this.handlePlatformClick}
+                      title='Platforms'
+                    />
+                  ) : (
+                    ""
+                  )}
 
-                  <ListHelper
-                    items={[{ type: currentGame.storyline }]}
-                    itemOpen={this.state.storylineOpen}
-                    onItemOpen={this.handleStorylineClick}
-                    title='Storyline'
-                  />
+                  {currentGame.themes ? (
+                    <ListHelper
+                      items={currentGame.themes}
+                      itemOpen={this.state.themeOpen}
+                      onItemOpen={this.handleThemeClick}
+                      title='Themes'
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {currentGame.game_engines ? (
+                    <ListHelper
+                      items={currentGame.game_engines}
+                      itemOpen={this.state.engineOpen}
+                      onItemOpen={this.handleGameEngineClick}
+                      title='Game Engines'
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {currentGame.time_to_beat ? (
+                    <ListHelper
+                      items={currentGame.time_to_beat}
+                      itemOpen={this.state.timeToBeatOpen}
+                      onItemOpen={this.handleTimeToBeatClick}
+                      title='Time to Beat'
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {currentGame.storyline ? (
+                    <ListHelper
+                      items={[{ type: currentGame.storyline }]}
+                      itemOpen={this.state.storylineOpen}
+                      onItemOpen={this.handleStorylineClick}
+                      title='Storyline'
+                    />
+                  ) : (
+                    ""
+                  )}
                 </List>
               </CardContent>
             </Card>

@@ -23,7 +23,11 @@ const renderListItem = ({ items, classes, itemOpen, onItemOpen, title }) => (
     <Collapse in={itemOpen} timeout='auto' unmountOnExit>
       <List component='div'>
         {items.map(item => {
-          return (
+          return title === "Developers" ? (
+            <ListItem key={item.name} className={classes.nested}>
+              <ListItemText>{item.name}</ListItemText>
+            </ListItem>
+          ) : (
             <ListItem key={item.type} className={classes.nested}>
               <ListItemText>{item.type}</ListItemText>
             </ListItem>

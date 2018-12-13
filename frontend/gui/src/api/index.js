@@ -10,7 +10,7 @@ const ROOT_URL = window.location.href.includes("localhost")
   ? ROOT_URL_DEV
   : ROOT_URL_PROD;
 
-const user_key = "e2a64d950a7f76fd8b9013b36e890dd2";
+const user_key = "6a96285ce7554f40b5f6c0770e3447a3";
 
 export default {
   signIn({ username, password }) {
