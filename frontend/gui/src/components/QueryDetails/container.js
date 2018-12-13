@@ -26,6 +26,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import api from "../../api";
 import ListHelper from "./listHelper";
+import FormModal from "./formModal";
 
 const styles = theme => ({
   menu: {
@@ -59,49 +60,6 @@ const styles = theme => ({
   }
 });
 
-const ratings = [
-  {
-    value: "1",
-    label: "one"
-  },
-  {
-    value: "2",
-    label: "two"
-  },
-  {
-    value: "3",
-    label: "three"
-  },
-  {
-    value: "4",
-    label: "four"
-  },
-  {
-    value: "5",
-    label: "five"
-  },
-  {
-    value: "6",
-    label: "six"
-  },
-  {
-    value: "7",
-    label: "seven"
-  },
-  {
-    value: "8",
-    label: "eight"
-  },
-  {
-    value: "9",
-    label: "nine"
-  },
-  {
-    value: "10",
-    label: "ten"
-  }
-];
-
 class Container extends Component {
   state = {
     notes: "",
@@ -113,22 +71,24 @@ class Container extends Component {
     themeOpen: false,
     engineOpen: false,
     timeToBeatOpen: false,
-    storylineOpen: false
+    storylineOpen: false,
+    modalOpen: false
   };
 
   handleGameSubmit = event => {
     event.preventDefault();
-    api.postToAPI(
-      this.state.notes,
-      this.state.rating,
-      this.props.currentGame.id,
-      this.props.currentGame.name,
-      this.props.currentGame.cover
-        ? this.props.currentGame.cover.url
-        : "https://sc.sftcdn.net/images/f1936-d9195.png",
-      this.props.user
-    );
-    this.props.history.push("/home");
+    api
+      .postToAPI(
+        this.state.notes,
+        this.state.rating,
+        this.props.currentGame.id,
+        this.props.currentGame.name,
+        this.props.currentGame.cover
+          ? this.props.currentGame.cover.url
+          : "https://sc.sftcdn.net/images/f1936-d9195.png",
+        this.props.user
+      )
+      .then(() => this.props.history.push("/home"));
   };
 
   handleChange = name => event => {
@@ -159,6 +119,10 @@ class Container extends Component {
 
   handleStorylineClick = () => {
     this.setState(state => ({ storylineOpen: !state.storylineOpen }));
+  };
+
+  handleClickModal = () => {
+    this.setState(state => ({ modalOpen: !state.modalOpen }));
   };
 
   renderFirstSetenceOfSummary = summary => {
@@ -267,7 +231,11 @@ class Container extends Component {
                   ""
                 )}
 
-                <Button variant='contained' className={classes.saveModalButton}>
+                <Button
+                  variant='contained'
+                  className={classes.saveModalButton}
+                  onClick={this.handleClickModal}
+                >
                   <GamesIcon className={classNames(classes.leftIcon)} />
                   Save
                 </Button>
@@ -275,47 +243,14 @@ class Container extends Component {
             </Card>
           </Grid>
 
-          <form onSubmit={this.handleGameSubmit}>
-            <FormControl margin='normal' fullWidth>
-              <TextField
-                label='notes'
-                value={this.state.notes}
-                onChange={this.handleChange("notes")}
-                required
-                margin='normal'
-              />
-            </FormControl>
-            <FormControl margin='normal' fullWidth>
-              <TextField
-                select
-                label='rating'
-                value={this.state.rating}
-                onChange={this.handleChange("rating")}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu
-                  }
-                }}
-                helperText='Select Rating'
-                margin='normal'
-              >
-                {ratings.map(rating => (
-                  <MenuItem key={rating.value} value={rating.value}>
-                    {rating.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </FormControl>
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}
-            >
-              Submit
-            </Button>
-          </form>
+          <FormModal
+            onFormInputChange={this.handleChange}
+            notes={this.state.notes}
+            rating={this.state.rating}
+            onGameSubmit={this.handleGameSubmit}
+            onModalClick={this.handleClickModal}
+            modalOpen={this.state.modalOpen}
+          />
         </Grid>
       );
     } catch (e) {
