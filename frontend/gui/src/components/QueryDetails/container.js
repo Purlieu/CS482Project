@@ -148,7 +148,9 @@ class Container extends Component {
               />
 
               <CardContent>
-                {this.renderFirstSetenceOfSummary(currentGame.summary)}
+                {currentGame.summary
+                  ? this.renderFirstSetenceOfSummary(currentGame.summary)
+                  : ""}
                 <List className={classes.listRoot}>
                   {currentGame.developers ? (
                     <ListHelper
