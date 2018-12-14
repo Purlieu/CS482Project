@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import { ListItem } from "@material-ui/core";
 
 const styles = {
@@ -13,7 +16,7 @@ const styles = {
   }
 };
 
-const MyGames = ({ gameid, notes, rating, title, url, onGameClick, index }) => {
+const MyGames = ({ id, gameid, notes, rating, title, url, onGameClick, onDelete, index }) => {
   return (
     <ListItem
       style={{
@@ -26,18 +29,15 @@ const MyGames = ({ gameid, notes, rating, title, url, onGameClick, index }) => {
         justifyContent: "center"
       }}
       button
-      onClick={() => {
-        onGameClick(index);
-      }}
     >
-      <Paper style={{ padding: 20, width: "100%" }}>
-        <Grid container spacing={16}>
-          <Grid item />
+      <Card style={{ padding: 20, width: "100%" }}>
+        <CardContent
+          onClick={() => {
+            onGameClick(index);
+          }}
+        >
           <Grid
             direction='column'
-            item
-            xs={12}
-            sm
             container
             style={{ paddingTop: 6 }}
           >
@@ -55,8 +55,14 @@ const MyGames = ({ gameid, notes, rating, title, url, onGameClick, index }) => {
               Notes: {notes}
             </Typography>
           </Grid>
-        </Grid>
-      </Paper>
+        </CardContent>
+        <CardActions>
+          <Button variant="contained" color="secondary"
+            onClick={() => onDelete(id)}>
+            Delete
+        </Button>
+        </CardActions>
+      </Card>
     </ListItem>
   );
 };
@@ -64,9 +70,11 @@ const MyGames = ({ gameid, notes, rating, title, url, onGameClick, index }) => {
 MyGames.defaultProps = {
   gameid: "",
   notes: "",
+  id: 0,
   rating: 0
 };
 MyGames.propTypes = {
+  id: PropTypes.number,
   gameid: PropTypes.string,
   notes: PropTypes.string,
   rating: PropTypes.number
