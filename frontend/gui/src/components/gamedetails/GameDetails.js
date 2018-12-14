@@ -13,7 +13,7 @@ const styles = {
   }
 };
 
-const Games = ({ platform, name, release_date, image, index, onGameClick }) => {
+const Games = ({ name, release_date, image, index, onGameClick }) => {
   return (
     <ListItem
       style={{
@@ -45,9 +45,6 @@ const Games = ({ platform, name, release_date, image, index, onGameClick }) => {
           >
             <Typography gutterBottom variant='subtitle1' padding={16}>
               {name}
-            </Typography>
-            <Typography gutterBottom padding={16}>
-              Console: {platform}
             </Typography>
             <Typography gutterBottom padding={16}>
               Release Date: {release_date}
