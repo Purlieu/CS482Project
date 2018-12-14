@@ -13,4 +13,4 @@ class Game(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default="")
 
     def __str__(self):
-        return self.gameid
+        return self.id

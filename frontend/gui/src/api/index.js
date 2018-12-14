@@ -34,6 +34,18 @@ export default {
       .then(response => response.data);
   },
 
+  deleteGame(token, id) {
+    const sendToken = "Token " + token;
+    return fetch(`${ROOT_URL}/api/${id}/delete/`, {
+      method: 'delete',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sendToken,
+      },
+    })
+      .then(response => response);
+  },
+
   updateUserName(token, username) {
     const sendToken = "Token " + token;
     return fetch(`${ROOT_URL}/rest-auth/user/`, {

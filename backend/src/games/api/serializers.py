@@ -5,5 +5,5 @@ from games.models import Game
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ("gameid", "notes", "rating",
+        fields = ("id", "gameid", "notes", "rating",
                   "release_date", "title", "image")

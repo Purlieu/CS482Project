@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import * as searchAction from "../../actions/search";
+import api from "../../api/index";
 
 class MyGames extends Component {
   state = { offset: 0, limit: 4 };
@@ -17,7 +18,11 @@ class MyGames extends Component {
   handleClick = offset => {
     this.setState({ offset });
   };
+  onHandleGameDelete = id => {
+    api.deleteGame(this.props.user, id);
+    window.location.reload();
 
+  }
   onHandleGameClick = index => {
     let currentGame = {
       id: this.props.listOfGames[index].gameid,
@@ -53,6 +58,7 @@ class MyGames extends Component {
       return (
         <Grid item xs={12} sm={3} key={games.gameid + index + games.rating}>
           <MyGamesDetails
+            id={games.id}
             gameid={games.gameid}
             notes={games.notes}
             rating={games.rating}
@@ -60,6 +66,7 @@ class MyGames extends Component {
             title={games.title}
             index={index}
             onGameClick={this.onHandleGameClick}
+            onDelete={this.onHandleGameDelete}
           />
         </Grid>
       );
@@ -95,7 +102,8 @@ MyGames.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    listOfGames: state.search.saved_games
+    listOfGames: state.search.saved_games,
+    user: state.auth.user,
   };
 }
 

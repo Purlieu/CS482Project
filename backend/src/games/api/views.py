@@ -11,7 +11,6 @@ from rest_framework.generics import (
 )
 from rest_framework import viewsets
 from games.models import Game
-import re
 from.serializers import GameSerializer
 
 
@@ -46,7 +45,6 @@ class GameCreateView(CreateAPIView):
             )
         else:
             serializer.save(owner=self.request.user)
-
 
 class GameUpdateView(UpdateAPIView):
     queryset = Game.objects.all()
