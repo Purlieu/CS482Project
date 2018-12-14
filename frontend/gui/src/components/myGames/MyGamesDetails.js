@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { ListItem } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  CardActions,
+  Typography,
+  Button,
+  ListItem
+} from "@material-ui/core";
 
 const styles = {
   media: {
@@ -16,7 +19,17 @@ const styles = {
   }
 };
 
-const MyGames = ({ id, gameid, notes, rating, title, url, onGameClick, onDelete, index }) => {
+const MyGames = ({
+  id,
+  gameid,
+  notes,
+  rating,
+  title,
+  url,
+  onGameClick,
+  onDelete,
+  index
+}) => {
   return (
     <ListItem
       style={{
@@ -30,34 +43,42 @@ const MyGames = ({ id, gameid, notes, rating, title, url, onGameClick, onDelete,
       }}
       button
     >
-      <Card style={{ padding: 20, width: "100%" }}>
+      <Card style={{ width: "100%" }}>
+        <CardHeader
+          title={title}
+          onClick={() => {
+            onGameClick(index);
+          }}
+        />
+        <CardMedia
+          style={{ height: 100, width: 100, marginLeft: 25 }}
+          image={url}
+          title={title}
+          onClick={() => {
+            onGameClick(index);
+          }}
+        />
+
         <CardContent
           onClick={() => {
             onGameClick(index);
           }}
         >
-          <Grid
-            direction='column'
-            container
-            style={{ paddingTop: 6 }}
-          >
-            <Typography gutterBottom variant='subtitle1' padding={16}>
-              {title}
-            </Typography>
-            <img src={url} width='100' height='100' />
-            <Typography gutterBottom padding={16}>
-              Rating: {rating}
-            </Typography>
-            <Typography gutterBottom padding={16}>
-              Notes: {notes}
-            </Typography>
-          </Grid>
+          <Typography gutterBottom padding={16}>
+            Rating: {rating}
+          </Typography>
+          <Typography gutterBottom padding={16} noWrap>
+            Notes: {notes}
+          </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="secondary"
-            onClick={() => onDelete(id)}>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => onDelete(id)}
+          >
             Delete
-        </Button>
+          </Button>
         </CardActions>
       </Card>
     </ListItem>
