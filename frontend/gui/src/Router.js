@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "./components/Home";
-import User from "./components/User";
+import User from "./components/editUser/container";
 
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
