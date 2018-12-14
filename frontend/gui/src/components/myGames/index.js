@@ -19,10 +19,10 @@ class MyGames extends Component {
     this.setState({ offset });
   };
   onHandleGameDelete = id => {
-    api.deleteGame(this.props.user, id);
-    window.location.reload();
-
-  }
+    api.deleteGame(this.props.user, id).then(() => {
+      this.props.getGamesFromAPI(this.props.user);
+    });
+  };
   onHandleGameClick = index => {
     let currentGame = {
       id: this.props.listOfGames[index].gameid,
@@ -103,7 +103,7 @@ MyGames.propTypes = {
 function mapStateToProps(state) {
   return {
     listOfGames: state.search.saved_games,
-    user: state.auth.user,
+    user: state.auth.user
   };
 }
 
