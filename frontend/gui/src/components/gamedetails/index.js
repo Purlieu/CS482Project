@@ -38,7 +38,6 @@ class Games extends Component {
       return (
         <GameDetails
           name={games.name}
-          platform={games.platforms ? games.platforms[0].name : "None Listed"}
           release_date={
             games.release_dates ? games.release_dates[0].human : "None Listed"
           }

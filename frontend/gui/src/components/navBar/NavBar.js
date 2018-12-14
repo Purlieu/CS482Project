@@ -23,7 +23,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 import Grid from "@material-ui/core/Grid";
-
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
@@ -183,8 +182,8 @@ class NavBar extends React.Component {
                 <SearchBar onSearchTermChange={this.onSearchTerm} />
               </Grid>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </Toolbar>
         </AppBar>
         <Drawer
@@ -201,8 +200,8 @@ class NavBar extends React.Component {
               {theme.direction === "ltr" ? (
                 <ChevronLeftIcon />
               ) : (
-                <ChevronRightIcon />
-              )}
+                  <ChevronRightIcon />
+                )}
             </IconButton>
           </div>
           <Divider />

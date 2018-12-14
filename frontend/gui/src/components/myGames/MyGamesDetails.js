@@ -41,13 +41,10 @@ const MyGames = ({ id, gameid, notes, rating, title, url, onGameClick, onDelete,
             container
             style={{ paddingTop: 6 }}
           >
-            <img src={url} width='100' height='100' />
             <Typography gutterBottom variant='subtitle1' padding={16}>
               {title}
             </Typography>
-            <Typography gutterBottom variant='subtitle1' padding={16}>
-              Game ID: {gameid}
-            </Typography>
+            <img src={url} width='100' height='100' />
             <Typography gutterBottom padding={16}>
               Rating: {rating}
             </Typography>
