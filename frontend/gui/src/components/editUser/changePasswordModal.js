@@ -16,7 +16,7 @@ import {
 import withStyles from "@material-ui/core/styles/withStyles";
 import api from "../../api";
 
-const PASSWORD_UPDATE_SUCCESS = "Password Updated Successfully"
+const PASSWORD_UPDATE_SUCCESS = "Password Updated Successfully";
 const styles = theme => ({
   menu: {
     width: 200
@@ -35,7 +35,7 @@ class ChangePasswordModal extends Component {
     passwordChangeError: undefined,
     confirmChangeError: undefined,
     isPasswordSaved: false,
-    isPasswordChanged: false,
+    isPasswordChanged: false
   };
 
   handleChange = name => event => {
@@ -55,8 +55,12 @@ class ChangePasswordModal extends Component {
     if (this.state.confirmChangeError) {
       return this.state.confirmChangeError[0];
     }
-    console.log(this.state.passwordChangeError + " " + this.state.confirmChangeError)
-    console.log(this.state.isPasswordChanged + " " + this.state.isPasswordSaved)
+    console.log(
+      this.state.passwordChangeError + " " + this.state.confirmChangeError
+    );
+    console.log(
+      this.state.isPasswordChanged + " " + this.state.isPasswordSaved
+    );
     if (this.state.isPasswordSaved && this.state.isPasswordChanged) {
       return PASSWORD_UPDATE_SUCCESS;
     }
@@ -64,18 +68,35 @@ class ChangePasswordModal extends Component {
   };
   handleOnSubmit = event => {
     event.preventDefault();
-    api.
-      updateUserPassword(this.props.user, this.state.currentPassword, this.state.newPassword, this.state.confirmNewPassword)
+    api
+      .updateUserPassword(
+        this.props.user,
+        this.state.currentPassword,
+        this.state.newPassword,
+        this.state.confirmNewPassword
+      )
       .then(({ old_password, new_password2 }) => {
         if (old_password !== undefined) {
-          this.setState({ passwordChangeError: old_password, isPasswordSaved: false });
+          this.setState({
+            passwordChangeError: old_password,
+            isPasswordSaved: false
+          });
         } else {
-          this.setStates({ passwordChangeError: undefined, isPasswordSaved: true });
+          this.setState({
+            passwordChangeError: undefined,
+            isPasswordSaved: true
+          });
         }
         if (new_password2 !== undefined) {
-          this.setState({ confirmChangeError: new_password2, isPasswordChanged: false });
+          this.setState({
+            confirmChangeError: new_password2,
+            isPasswordChanged: false
+          });
         } else {
-          this.setState({ confirmChangeError: undefined, isPasswordChanged: true });
+          this.setState({
+            confirmChangeError: undefined,
+            isPasswordChanged: true
+          });
         }
       });
   };
@@ -139,7 +160,10 @@ class ChangePasswordModal extends Component {
                 Submit
               </Button>
               <FormHelperText
-                error={!!this.state.passwordChangeError && !!this.state.passwordChangeError}
+                error={
+                  !!this.state.passwordChangeError &&
+                  !!this.state.passwordChangeError
+                }
                 style={{ width: "100%" }}
               >
                 {this.renderPasswordChange()}
