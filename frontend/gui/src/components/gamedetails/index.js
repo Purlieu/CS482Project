@@ -43,7 +43,7 @@ class Games extends Component {
           }
           summary={games.summary}
           url={games.url}
-          key={games.name}
+          key={games.id}
           image={
             games.cover
               ? games.cover.url
