@@ -10,7 +10,7 @@ const ROOT_URL = window.location.href.includes("localhost")
   ? ROOT_URL_DEV
   : ROOT_URL_PROD;
 
-const user_key = "c53621f4b8c7f6784b02ebce8be1fd00";
+const user_key = "70ef90bbe20eac2beaf3470aaf55b9a3";
 
 export default {
   signIn({ username, password }) {
@@ -56,6 +56,22 @@ export default {
       },
       body: JSON.stringify({
         username
+      })
+    }).then(response => response.json());
+  },
+  updateUserPassword(token, currentpassword, new_password1, new_password2) {
+    const sendToken = "Token " + token;
+    return fetch(`${ROOT_URL}/rest-auth/password/change/`, {
+      method: "post",
+      headers: {
+        Authorization: sendToken,
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        old_password: currentpassword,
+        new_password1: new_password1,
+        new_password2: new_password2,
       })
     }).then(response => response.json());
   },

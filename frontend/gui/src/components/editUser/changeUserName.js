@@ -55,7 +55,6 @@ class ChangeUserName extends Component {
 
   handleEditUserName = event => {
     event.preventDefault();
-
     api
       .updateUserName(this.props.user, this.state.name)
       .then(({ username }) => {
