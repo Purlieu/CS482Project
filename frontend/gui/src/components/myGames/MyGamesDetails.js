@@ -16,7 +16,6 @@ import { blue } from "@material-ui/core/colors";
 
 const GREY = "#9E9E9E";
 
-
 const styles = {
   media: {
     height: 0,
@@ -24,7 +23,7 @@ const styles = {
     width: 100,
     marginLeft: 25,
     padding: "5%",
-    boxShadow: `3px 5px 3px ${GREY}`,
+    boxShadow: `3px 5px 3px ${GREY}`
   },
   TitleField: {
     padding: "3%",
@@ -51,21 +50,24 @@ const MyGames = ({
         paddingBottom: 0,
         marginBottom: 10,
         width: "80%",
-        justifyContent: "center",
+        justifyContent: "center"
       }}
       button
     >
-      <Paper elevation10 style={{ width: "95%" }}	>
-
+      <Paper elevation={10} style={{ width: "95%" }}>
         <Card style={{ width: "100%", shadow: 3 }}>
-          <Typography variant="h6" component="h2"
+          <Typography
+            variant='h6'
+            component='h2'
             noWrap
             align='center'
             className={classes.TitleField}
             onClick={() => {
               onGameClick(index);
             }}
-          >{title}</Typography>
+          >
+            {title}
+          </Typography>
           <CardMedia
             className={classes.media}
             image={url}
@@ -94,11 +96,10 @@ const MyGames = ({
               onClick={() => onDelete(id)}
             >
               Delete
-          </Button>
+            </Button>
           </CardActions>
         </Card>
       </Paper>
-
     </ListItem>
   );
 };
