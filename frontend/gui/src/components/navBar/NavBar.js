@@ -174,7 +174,7 @@ class NavBar extends React.Component {
               component={Link}
               to='/home'
             >
-              App_Name
+              CGAR
             </Typography>
             <div className={classes.grow} />
             {user ? (
