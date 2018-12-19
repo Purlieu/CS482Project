@@ -4,19 +4,19 @@ import { Card, CardMedia } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { compose } from "redux";
 
-import earth from "../resources/CGAR.png"
+import earth from "../resources/CGAR.png";
 
 const styles = {
   card: {
     margin: 0,
-    overflow: 'hidden',
+    overflow: "hidden"
   },
   media: {
     display: "block",
     margin: "0 auto",
-    width: '1860px',
-    height: '800px',
-  },
+    width: "auto",
+    height: "100vh"
+  }
 };
 
 class Landing extends Component {
@@ -26,20 +26,14 @@ class Landing extends Component {
     }
   }
 
-
-
   render() {
     const { classes } = this.props;
 
     return (
       <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={earth}
-        >
-        </CardMedia>
-      </Card >
-    )
+        <CardMedia className={classes.media} image={earth} />
+      </Card>
+    );
   }
 }
 
@@ -52,4 +46,4 @@ function mapStateToProps(state) {
 export default compose(
   withStyles(styles),
   connect(mapStateToProps)
-)(Landing);	
+)(Landing);
